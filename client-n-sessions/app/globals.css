@@ -17,11 +17,28 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: beige;
+  height: 100%;
+  display: flex;
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 2px;
+    height: 1px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: beige;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #e0cbcb;
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
+  }
 }
