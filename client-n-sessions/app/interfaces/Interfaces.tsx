@@ -33,12 +33,29 @@ export interface BasicTutorInfoInterface {
 export interface ImageThumbNailInterface {
   alt: string;
   src: string;
-  className: string;
+  width: number;
+  height: number;
 }
 
 export interface CourseInfoCardInterface {
+  id: string;
   course_name: string;
   tutor_name: string;
-  registeredCourse: string;
+  registeredCourse: boolean;
   thumbnail_url: string;
+  rating: number;
+}
+
+export interface AssessmentCardInterface {
+  id: string;
+  course_title: string;
+  topic: string;
+  score: number;
+}
+
+export interface SessionCardInterface {
+  id: string;
+  title: string;
+  tutor_name: string;
+  date: string;
 }

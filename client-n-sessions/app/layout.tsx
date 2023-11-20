@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="">
         <Sidebar />
-        <div className="container p-10">{children}</div>
+        <div className="container p-10 ml-[20%]">{children}</div>
       </body>
     </html>
   );

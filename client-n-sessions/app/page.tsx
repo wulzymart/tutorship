@@ -3,6 +3,10 @@ import Search from "./components/utils/Search";
 import Header3 from "./components/utils/Header3";
 import RoundImage from "./components/utils/RoundImage";
 import RecommendedTutors from "./components/entities/tutors/RecommendedTutors";
+import RegisteredCourses from "./components/entities/courses/RegisteredCourses";
+import RecommendedCourses from "./components/entities/courses/RecommendedCourses";
+import AssessmentsList from "./components/entities/assessment/AssessmentsList";
+import SessionsList from "./components/entities/sessions/SessionsList";
 
 export default function Home() {
   return (
@@ -23,13 +27,26 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="flex justify-between items-center bg-slate-50 p-10 rounded-lg">
+      <section className="bg-slate-50 p-10 rounded-lg mb-16">
         <div>
           <Header3 text="Registered Courses" />
-          <div></div>
+          <RegisteredCourses />
+        </div>
+        <div>
+          <Header3 text="Recommended Courses" />
+          <RecommendedCourses />
         </div>
       </section>
-      <section></section>
+      <section className="flex justify-between items-start bg-slate-50 p-10 rounded-lg mb-16">
+        <div className="w-1/2 flex flex-col gap-10 pr-10">
+          <Header3 text="Past Assessments" />
+          <AssessmentsList />
+        </div>
+        <div className="w-1/2 flex flex-col gap-10 pl-10">
+          <Header3 text="Upcoming Sessions" />
+          <SessionsList />
+        </div>
+      </section>
     </div>
   );
 }

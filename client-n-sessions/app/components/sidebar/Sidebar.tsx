@@ -37,7 +37,7 @@ const sidebarEntries: SidebarEntry[] = [
 
 const Sidebar = () => {
   return (
-    <div className="w-[20%] h-screen overflow-y-scroll scrollbar bg-main flex flex-col">
+    <div className="w-[20%]  overflow-y-scroll scrollbar bg-main flex flex-col h-screen fixed overflow-x-hidden">
       {/* <div className="text-right px-5">
         <button className="text-white">
           <FaBars />

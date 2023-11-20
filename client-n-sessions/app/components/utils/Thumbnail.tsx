@@ -1,10 +1,15 @@
 import { ImageThumbNailInterface } from "@/app/interfaces/Interfaces";
 import Image from "next/image";
-const Thumbnail = ({ alt, src, className }: ImageThumbNailInterface) => {
+const Thumbnail = ({ alt, src, width, height }: ImageThumbNailInterface) => {
   return (
-    <div className={className}>
-      <Image alt={alt} src={src} fill style={{ objectFit: "cover" }} />
-    </div>
+    <Image
+      alt={alt}
+      src={src}
+      style={{ objectFit: "cover" }}
+      className="border-2 border-solid border-front"
+      width={width}
+      height={height}
+    />
   );
 };
 
