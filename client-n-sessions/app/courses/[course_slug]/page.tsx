@@ -68,12 +68,12 @@ const page = () => {
 
   const items: CollapseProps["items"] = course.videos.map((video) => {
     return {
-      label: <Header6 text={video.topic} />,
+      label: <div className="bg-slate-50 px-[2%] py-4 mb-2 w-full"><Header6 text={video.topic} /></div>,
       key: video.id,
       children: (
         <div>
           {video.videoList.map((vid) => (
-            <div key={vid.id}>
+            <div key={vid.id} className="flex justify-between mb-2">
               <p>{vid.title}</p>
               <p>
                 {Math.floor(vid.duration / 60)}:{vid.duration % 60}
@@ -82,6 +82,7 @@ const page = () => {
           ))}
         </div>
       ),
+      className: "bg-slate-50 px-5"
     };
   });
   return (
@@ -142,8 +143,9 @@ const page = () => {
             <div dangerouslySetInnerHTML={{ __html: course.requirements }} />
           </div>
         </div>
-        <div>
-          <div>
+        <div className="w-[20%]">
+          <Header3 text="Content"/>
+          <div className="px-5 w-full">
             <Collapse
               accordion={true}
               items={items}
