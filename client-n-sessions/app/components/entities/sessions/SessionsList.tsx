@@ -10,19 +10,19 @@ const SessionsList = () => {
       date: new Date().toDateString(),
     },
     {
-      id: "1",
+      id: "2",
       title: "Python is fun",
       tutor_name: "Johm Doe",
       date: new Date().toDateString(),
     },
     {
-      id: "1",
+      id: "3",
       title: "Python is fun",
       tutor_name: "Johm Doe",
       date: new Date().toDateString(),
     },
     {
-      id: "1",
+      id: "4",
       title: "Python is fun",
       tutor_name: "Johm Doe",
       date: new Date().toDateString(),

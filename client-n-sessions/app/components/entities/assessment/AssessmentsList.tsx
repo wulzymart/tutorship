@@ -10,13 +10,13 @@ const AssessmentsList = () => {
       score: 80,
     },
     {
-      id: "1",
+      id: "2",
       course_title: "Python is fun",
       topic: "Python Lists",
       score: 90,
     },
     {
-      id: "1",
+      id: "3",
       course_title: "JavaScript is fun",
       topic: "Variable naming",
       score: 100,
