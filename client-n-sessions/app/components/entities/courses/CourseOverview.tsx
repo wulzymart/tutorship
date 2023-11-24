@@ -5,13 +5,16 @@ import { FaGlobe } from "react-icons/fa";
 import Header3 from "@/app/components/utils/Header3";
 import Collapse, { CollapseProps } from "rc-collapse";
 import Header6 from "@/app/components/utils/Header6";
-import Rating from "../../utils/Rating"
-import Accordion from "../../utils/Accordion"
-const CourseOverview  = ({course}: {course: any}) => {
-
+import Rating from "../../utils/Rating";
+import Accordion from "../../utils/Accordion";
+const CourseOverview = ({ course }: { course: any }) => {
   const items: CollapseProps["items"] = course.videos.map((video: any) => {
     return {
-      label: <div className="bg-slate-50 px-[2%] py-4 mb-2 w-full"><Header6 text={video.topic} /></div>,
+      label: (
+        <div className="bg-slate-50 px-[2%] py-4 mb-2 w-full">
+          <Header6 text={video.topic} />
+        </div>
+      ),
       key: video.id,
       children: (
         <div>
@@ -25,7 +28,7 @@ const CourseOverview  = ({course}: {course: any}) => {
           ))}
         </div>
       ),
-      className: "bg-slate-50 px-5"
+      className: "bg-slate-50 px-5",
     };
   });
   return (
@@ -48,7 +51,7 @@ const CourseOverview  = ({course}: {course: any}) => {
           <div>
             <p className="font font-medium">Tutor: {course.tutor_name}</p>
           </div>
-          <Rating rating={course.rating}/>
+          <Rating rating={course.rating} />
           <div className="flex gap-4 py-2 items-center">
             <FaGlobe />
             <p>{course.language}</p>
@@ -79,8 +82,8 @@ const CourseOverview  = ({course}: {course: any}) => {
           </div>
         </div>
         <div className="w-[20%]">
-          <Header3 text="Content"/>
-          <Accordion items={items} className="px-5 w-full"/>
+          <Header3 text="Content" />
+          <Accordion items={items} className="px-5 w-full" />
         </div>
       </div>
     </div>

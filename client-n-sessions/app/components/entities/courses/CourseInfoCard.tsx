@@ -7,9 +7,10 @@ const CourseInfoCard = ({
   id,
   course_name,
   tutor_name,
-  registeredCourse,
+  registeredCourse = false,
   thumbnail_url,
   rating,
+  sales,
 }: CourseInfoCardInterface) => {
   return (
     <div className="p-5 text-main2">
@@ -22,9 +23,15 @@ const CourseInfoCard = ({
       <Header5 text={course_name} />
       <p className="font-medium text-[16px]">{tutor_name}</p>
       <div className="text-sm flex justify-between">
-        <p className="">{registeredCourse ? "Your Rating" : "Course Rating"}</p>
+        <p className="">{registeredCourse ? "Your Rating" : "Rating"}</p>
         <p className="">{rating}/5</p>
       </div>
+      {sales && (
+        <div className="text-sm flex justify-between">
+          <p className="">Sales</p>
+          <p className="">{sales}</p>
+        </div>
+      )}
     </div>
   );
 };

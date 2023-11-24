@@ -3,7 +3,7 @@ import CourseInfoCard from "./CourseInfoCard";
 
 const Courses = ({ courses }: { courses: CourseInfoCardInterface[] }) => {
   return (
-    <div className="flex ">
+    <div className="flex">
       {courses.map((course, i) => {
         const {
           id,

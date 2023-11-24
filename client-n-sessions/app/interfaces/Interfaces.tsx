@@ -2,6 +2,7 @@ import { IconType } from "react-icons";
 export interface SidebarEntry {
   Icon: IconType;
   name: string;
+  link: string;
 }
 export interface TextInputInterface {
   type: "text" | "password";
@@ -22,6 +23,7 @@ export interface RoundImageInterface {
   height: number;
   width: number;
   alt: string;
+  border: number;
 }
 
 export interface BasicTutorInfoInterface {
@@ -40,10 +42,11 @@ export interface ImageThumbNailInterface {
 export interface CourseInfoCardInterface {
   id: string;
   course_name: string;
-  tutor_name: string;
-  registeredCourse: boolean;
+  tutor_name?: string;
+  registeredCourse?: boolean;
   thumbnail_url: string;
   rating: number;
+  sales?: number;
 }
 
 export interface AssessmentCardInterface {
