@@ -59,6 +59,13 @@ export interface AssessmentCardInterface {
 export interface SessionCardInterface {
   id: string;
   title: string;
-  tutor_name: string;
+  tutor_name?: string;
   date: string;
+}
+
+export interface ReviewCardInterface {
+  rating: number;
+  review: string;
+  learner: string;
+  id: string
 }

@@ -1,6 +1,6 @@
 import { CollapseProps } from "rc-collapse";
 import Header6 from "./components/utils/Header6";
-import { SidebarEntry } from "./interfaces/Interfaces";
+import { ReviewCardInterface, SidebarEntry } from "./interfaces/Interfaces";
 import { MdAssessment, MdDashboard, MdVideoCameraFront } from "react-icons/md";
 import { IoVideocam } from "react-icons/io5";
 import { FaWallet } from "react-icons/fa";
@@ -156,3 +156,11 @@ export const tutorsSidebarEntries: SidebarEntry[] = [
     link: "/tutor/settings",
   },
 ];
+
+export const reviews: ReviewCardInterface[] = [
+  {id: "1",rating: 4, review: "this is a test review. itshows how a review will likelh look, this is for testing purpose alone", learner: "Jane Foster"},
+
+  {id: "2", rating: 4, review: "this is a test review. itshows how a review will likelh look, this is for testing purpose alone", learner: "Jane Foster"},
+
+{id:"3", rating: 4, review: "this is a test review. itshows how a review will likelh look, this is for testing purpose alone", learner: "Jane Foster"},
+]
