@@ -14,17 +14,27 @@ The entire backend system is developed using FastAPI, a modern web framework for
 To start the backend application, follow these steps:
 
 1. **Clone the Repository**: Clone the repository containing the backend code:
-   ```git clone git@github.com:wulzymart/tutorship.git
-   cd tutorship/backend/app```
+   ```
+   git clone git@github.com:wulzymart/tutorship.git
+   cd tutorship/backend/app
+   ```
 2. **Setup Virtual Environment (Optional but recommended)**: Create and activate a virtual environment:
-   ```python -m venv venv
-   source venv/bin/activate  # On Windows: .\venv\Scripts\activate```
-3. **Install Dependencies**: Install the required dependencies**
-   ```pip install -r requirements.txt```
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+   ```
+3. **Install Dependencies**: Install the required dependencies
+   ```
+   pip install -r requirements.txt
+   ```
 4. **Setup the Database**: Run the SQL database setup script (setup_db.sql) provided in the repository to initialize the required database structure.
-   ```cat ../setub_db.sql | sudo mysql```
+   ```
+   cat ../setub_db.sql | sudo mysql
+   ```
 5. **Run the FastAPI Application**: Start the FastAPI application using uvicorn:
-   ```uvicorn main:app --reload```
+   ```
+   uvicorn main:app --reload
+   ```
 6. **Accessing the API**: Once the FastAPI application is running, navigate to http://localhost:8000/docs in your browser to access the Swagger UI documentation and interact with the API endpoints.
 
 ## Purpose
