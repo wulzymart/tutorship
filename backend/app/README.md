@@ -25,7 +25,7 @@ To start the backend application, follow these steps:
    ```
 3. **Install Dependencies**: Install the required dependencies
    ```
-   pip install -r requirements.txt
+   pip install -r ../requirements.txt
    ```
 4. **Setup the Database**: Run the SQL database setup script (setup_db.sql) provided in the repository to initialize the required database structure.
    ```
