@@ -10,7 +10,7 @@ export interface TextInputInterface {
   value: string;
   placeholder?: string;
   Icon?: IconType;
-  handleChange: (e: any) => void;
+  handleChange: (e: React.FormEvent<HTMLInputElement> ) => void;
 }
 
 export interface ButtonInterface {
@@ -59,6 +59,13 @@ export interface AssessmentCardInterface {
 export interface SessionCardInterface {
   id: string;
   title: string;
-  tutor_name: string;
+  tutor_name?: string;
   date: string;
+}
+
+export interface ReviewCardInterface {
+  rating: number;
+  review: string;
+  learner: string;
+  id: string
 }

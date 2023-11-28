@@ -1,4 +1,6 @@
 import CourseInfoCard from "@/app/components/entities/courses/CourseInfoCard";
+import ReviewList from "@/app/components/entities/reviews/ReviewList";
+import SessionsListTutor from "@/app/components/entities/sessions/SessionsListTutor";
 import Header3 from "@/app/components/utils/Header3";
 import Header5 from "@/app/components/utils/Header5";
 import RoundImage from "@/app/components/utils/RoundImage";
@@ -88,6 +90,16 @@ const TutorsDashboard = () => {
           ))}
         </div>
       </section>
+      <div className="bg-slate-50 p-10 rounded-lg mb-16 flex">
+        <section className="w-1/2 px-5">
+          <Header3 text="Reviews"/>
+          <div><ReviewList/></div>
+        </section>
+        <section className="w-1/2 px-5">
+          <Header3 text="Scheduled Sessions"/>
+          <div><SessionsListTutor/></div>
+        </section>
+      </div>
     </div>
   );
 };

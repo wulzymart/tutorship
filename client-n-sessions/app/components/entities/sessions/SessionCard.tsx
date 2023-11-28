@@ -10,7 +10,7 @@ const SessionCard = ({ id, title, tutor_name, date }: SessionCardInterface) => {
     >
       <Header6 text={title} />
       <div className="flex justify-between w-full">
-        <p>{tutor_name}</p>
+        {tutor_name && <p>{tutor_name}</p>}
         <p>{date}</p>
       </div>
     </div>
