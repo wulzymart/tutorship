@@ -16,7 +16,7 @@ const TextInput = ({
         </div>
       )}
       <input
-        className="w-full h-10 rounded outline-main2 px-12"
+        className="w-full h-10 rounded outline-main2 px-12 bg-white"
         type={type}
         name={name}
         value={value}

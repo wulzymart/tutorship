@@ -135,11 +135,6 @@ export const tutorsSidebarEntries: SidebarEntry[] = [
     name: "Calender",
     link: "/tutor/calender",
   },
-  // {
-  //   Icon: MdVideoCameraFront,
-  //   name: "Session",
-  //   link: "/tutor/calender",
-  // },
   {
     Icon: MdAssessment,
     name: "Assessments",

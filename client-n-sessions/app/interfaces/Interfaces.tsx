@@ -10,7 +10,7 @@ export interface TextInputInterface {
   value: string;
   placeholder?: string;
   Icon?: IconType;
-  handleChange: (e: any) => void;
+  handleChange: (e: React.FormEvent<HTMLInputElement> ) => void;
 }
 
 export interface ButtonInterface {
