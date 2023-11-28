@@ -33,7 +33,7 @@ To start the backend application, follow these steps:
    ```
 5. **Run the FastAPI Application**: Start the FastAPI application using uvicorn:
    ```
-   uvicorn main:app --reload
+    USER=tutorship_dev DB=tutorship_db DB_PWD=tutorship_dev_pwd HOST=localhost PORT=3306  uvicorn --reload main:app
    ```
 6. **Accessing the API**: Once the FastAPI application is running, navigate to http://localhost:8000/docs in your browser to access the Swagger UI documentation and interact with the API endpoints.
 
