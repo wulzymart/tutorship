@@ -1,7 +1,32 @@
-const TextArea = ({className, rows, cols}:{className: string, rows: number, cols: number}) => {
-  return (
-    <div className= {className}><textarea className="w-full rounded" rows={rows} cols={cols}/></div>
-  )
-}
+import React from "react";
 
-export default TextArea
+const TextArea = ({
+  className,
+  rows,
+  cols,
+  name,
+  value,
+  handleChange,
+}: {
+  className: string;
+  rows?: number;
+  cols?: number;
+  value: string;
+  name: string;
+  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}) => {
+  return (
+    <div className={className}>
+      <textarea
+        className="w-full rounded bg-white"
+        rows={rows}
+        cols={cols}
+        name={name}
+        value={value}
+        onChange={handleChange}
+      />
+    </div>
+  );
+};
+
+export default TextArea;
