@@ -5,13 +5,19 @@ import Header2 from "@/app/components/utils/Header2";
 
 const CourseHeader = () => {
   return (
-    <section className="flex ">
+    <section className="flex justify-between items-center mb-20">
       <Header2 text="Course title" />
-      <div>
+      <div className="flex gap-10">
         <Button
           text="Publish"
           handleClick={() => {
             console.log("publish");
+          }}
+        />
+        <Button
+          text="Delete"
+          handleClick={() => {
+            console.log("Delete");
           }}
         />
       </div>
