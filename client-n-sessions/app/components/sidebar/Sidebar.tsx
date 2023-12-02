@@ -17,8 +17,14 @@ const Sidebar = ({ sidebarEntries }: { sidebarEntries: SidebarEntry[] }) => {
         </button>
       </div> */}
 
-      <div className="my-10 flex w-full justify-center">
-        <Image alt="tutorship logo" src="/logo.png" width={100} height={100} />
+      <div className="my-10 flex w-full justify-center rounded-lg">
+        <Image
+          className="rounded-full"
+          alt="tutorship logo"
+          src="/logo.png"
+          width={100}
+          height={100}
+        />
       </div>
       {sidebarEntries.map((entry, index) => (
         <div key={index}>
