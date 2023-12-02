@@ -15,7 +15,7 @@ class VideoReq(BaseModel):
     """
     title: str
     paid: bool
-    published: bool = True
+    published: bool = False
 
 
 class VideoRes(Base, VideoReq):

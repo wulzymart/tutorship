@@ -15,7 +15,8 @@ class CourseReq(BaseModel):
     title: str
     about: str
     price: int
-    published: bool = True
+    free: bool = False
+    published: bool = False
 
 
 class CourseRes(Base, CourseReq):

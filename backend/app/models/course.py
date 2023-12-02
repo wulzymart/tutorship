@@ -23,6 +23,7 @@ class Course(Basemodel, Base):
     title = Column(String(256), nullable=False)
     about = Column(String(1027), nullable=False)
     price = Column(Integer, nullable=False, default=0)
+    free = Column(Boolean, nullable=False, default=True)
     published = Column(Boolean, nullable=False, default=True)
     reviews = relationship("Review", backref="course", cascade="all, delete")
     videos = relationship("Video", backref="course", cascade="all, delete")
