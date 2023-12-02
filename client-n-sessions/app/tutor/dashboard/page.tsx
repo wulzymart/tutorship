@@ -7,8 +7,17 @@ import RoundImage from "@/app/components/utils/RoundImage";
 import { course } from "@/app/data";
 import React from "react";
 import CourseCarousel from "./CourseCarousel";
+function log<T>(item: T) {
+  console.log(item);
+}
+const TutorsDashboard = async () => {
+  const id = "87ca35cc-c775-42eb-9ef3-6df4938a4372";
+  const tutorFromServer = await fetch(
+    "http://127.0.0.1:8000/tutor/87ca35cc-c775-42eb-9ef3-6df4938a4372",
+    { cache: "no-cache" }
+  );
+  log(tutorFromServer);
 
-const TutorsDashboard = () => {
   const tutor = {
     first_name: "John",
     last_name: "Doe",
@@ -72,7 +81,7 @@ const TutorsDashboard = () => {
         <p>
           Welcome{" "}
           <span className="italic font-medium">
-            {tutor.first_name} {tutor.last_name}
+            {tutorFromServer.firstname} {tutorFromServer.lastname}
           </span>
         </p>
         <RoundImage

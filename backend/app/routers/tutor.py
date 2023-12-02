@@ -30,7 +30,7 @@ async def get_tutors(db: Session = Depends(get_db)):
 
 @router.get("/{tutor_id}", response_model=TutorRes, tags=[Tags.get],
             response_model_exclude=["password"])
-async def get_tutor(tutorid: str, db: Session = Depends(get_db)):
+async def get_tutor(tutor_id: str, db: Session = Depends(get_db)):
     """ Operation to get a tutor with given id """
     tutor = db.get(Tutor, tutor_id)
     if not tutor:
