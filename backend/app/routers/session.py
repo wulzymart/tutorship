@@ -10,6 +10,7 @@ from fastapi import HTTPException
 from models.session import Session
 from models.student import Student
 from models.tutor import Tutor
+from routers.method_tags import Tags
 from schemas.session import SessionReq
 from schemas.session import SessionRes
 from schemas.student import StudentRes
@@ -19,7 +20,7 @@ from typing import List
 router = APIRouter(prefix="/session")
 
 
-@router.get("/", response_model=List[SessionRes])
+@router.get("/", response_model=List[SessionRes], tags=[Tags.get])
 async def get_sessions(db: SS = Depends(get_db)):
     """ Operation to retrieve all sessions in the sessions table """
     sessions = db.all(Session)
@@ -27,7 +28,7 @@ async def get_sessions(db: SS = Depends(get_db)):
     return sessions
 
 
-@router.get("/{id}", response_model=SessionRes)
+@router.get("/{id}", response_model=SessionRes, tags=[Tags.get])
 async def get_session(id: str, db: SS = Depends(get_db)):
     """ Operation to retrieve a session with a given id """
     session = db.get(Session, id)
@@ -37,7 +38,8 @@ async def get_session(id: str, db: SS = Depends(get_db)):
     return session
 
 
-@router.get("/{session_id}/students", response_model=List[StudentRes])
+@router.get("/{session_id}/students", tags=[Tags.get],
+            response_model=List[StudentRes])
 async def get_session_students(session_id: str, db: SS = Depends(get_db)):
     session = db.get(Session, session_id)
     if not session:
@@ -45,7 +47,7 @@ async def get_session_students(session_id: str, db: SS = Depends(get_db)):
     return session.students
 
 
-@router.post("/{tutor_id}", response_model=SessionRes)
+@router.post("/{tutor_id}", response_model=SessionRes, tags=[Tags.post])
 async def create_session(req: SessionReq, tutor_id: str,
                          db: SS = Depends(get_db)):
     """ Operation for an author to create a new session """
@@ -61,7 +63,8 @@ async def create_session(req: SessionReq, tutor_id: str,
     return session
 
 
-@router.put("/{tutor_id}/{session_id}", response_model=SessionRes)
+@router.put("/{tutor_id}/{session_id}", tags=[Tags.put],
+            response_model=SessionRes)
 async def update_session(req: SessionReq, tutor_id: str, session_id: str,
                          db: SS = Depends(get_db)):
     """ Operation to update a session information """
@@ -78,7 +81,7 @@ async def update_session(req: SessionReq, tutor_id: str, session_id: str,
     return session
 
 
-@router.delete("/{tutor_id}/{session_id}")
+@router.delete("/{tutor_id}/{session_id}", tags=[Tags.delete])
 async def delete_session(tutor_id: str, session_id: str,
                          db: SS = Depends(get_db)):
     """ Operation to delete a session from the sessions table """

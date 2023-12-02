@@ -8,6 +8,7 @@ from fastapi import Depends
 from fastapi import HTTPException
 from dependencies.engine import get_db
 from models.tutor import Tutor
+from routers.method_tags import Tags
 from schemas.course import CourseRes
 from schemas.session import SessionRes
 from schemas.student import StudentRes
@@ -19,7 +20,7 @@ from typing import List
 router = APIRouter(prefix="/tutor")
 
 
-@router.get("/", response_model=List[TutorRes])
+@router.get("/", response_model=List[TutorRes], tags=[Tags.get])
 async def get_tutors(db: Session = Depends(get_db)):
     """ Operation to get all list of authors in a database """
     tutors = db.all(Tutor)
@@ -27,28 +28,30 @@ async def get_tutors(db: Session = Depends(get_db)):
     return tutors
 
 
-@router.get("/{id}", response_model=TutorRes,
+@router.get("/{tutor_id}", response_model=TutorRes, tags=[Tags.get],
             response_model_exclude=["password"])
-async def get_tutor(id: str, db: Session = Depends(get_db)):
+async def get_tutor(tutorid: str, db: Session = Depends(get_db)):
     """ Operation to get a tutor with given id """
-    tutor = db.get(Tutor, id)
+    tutor = db.get(Tutor, tutor_id)
     if not tutor:
         raise HTTPException(detail="tutor not found", status_code=404)
 
     return tutor
 
 
-@router.get("/{id}/courses", response_model=List[CourseRes])
-async def get_tutors_courses(id: str, db: Session = Depends(get_db)):
+@router.get("/{tutor_id}/courses", response_model=List[CourseRes],
+            tags=[Tags.get])
+async def get_tutors_courses(tutor_id: str, db: Session = Depends(get_db)):
     """ Operation to get all courses linked to a tutor """
-    tutor = db.get(Tutor, id)
+    tutor = db.get(Tutor, tutor_id)
     if not tutor:
         raise HTTPException(detail="tutor not found", status_code=404)
 
     return tutor.courses
 
 
-@router.get("/{tutor_id}/sessions", response_model=List[SessionRes])
+@router.get("/{tutor_id}/sessions", tags=[Tags.get],
+            response_model=List[SessionRes])
 async def get_tutor_sessions(tutor_id: str, db: Session = Depends(get_db)):
     """ Operation to get the session linked to an author """
     tutor = db.get(Tutor, tutor_id)
@@ -58,7 +61,8 @@ async def get_tutor_sessions(tutor_id: str, db: Session = Depends(get_db)):
     return tutor.sessions
 
 
-@router.get("/{tutor_id}/students", response_model=List[StudentRes])
+@router.get("/{tutor_id}/students", tags=[Tags.get],
+            response_model=List[StudentRes])
 async def get_tutor_student(tutor_id: str, db: Session = Depends(get_db)):
     """ Operation to get all students learning from a tutor """
     tutor = db.get(Tutor, tutor_id)
@@ -68,7 +72,7 @@ async def get_tutor_student(tutor_id: str, db: Session = Depends(get_db)):
     return tutor.students
 
 
-@router.post("/", response_model=TutorRes,
+@router.post("/", response_model=TutorRes, tags=[Tags.post],
              response_model_exclude=["password"])
 async def create_tutor(req: TutorReq, db: Session = Depends(get_db)):
     """ Operation to create a new tutor """
@@ -79,7 +83,7 @@ async def create_tutor(req: TutorReq, db: Session = Depends(get_db)):
     return tutor
 
 
-@router.put("/{id}", response_model=TutorRes,
+@router.put("/{id}", response_model=TutorRes, tags=[Tags.put],
             response_model_exclude=["password"])
 async def update_tutor(req: TutorReq, id: str, db: Session = Depends(get_db)):
     """ Operation to update the content of an existing tutor """
@@ -93,7 +97,7 @@ async def update_tutor(req: TutorReq, id: str, db: Session = Depends(get_db)):
     return tutor
 
 
-@router.delete("/{id}")
+@router.delete("/{id}", tags=[Tags.delete])
 async def delete_tutor(id: str, db: Session = Depends(get_db)):
     """ Operation to delete a tutor from the database"""
     tutor = db.get(Tutor, id)

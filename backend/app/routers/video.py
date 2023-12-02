@@ -11,6 +11,7 @@ from fastapi import UploadFile
 from fastapi.responses import FileResponse
 from models.video import Video
 from models.course import Course
+from routers.method_tags import Tags
 from schemas.comment import CommentRes
 from schemas.video import VideoReq
 from schemas.video import VideoRes
@@ -20,7 +21,7 @@ from typing import List
 router = APIRouter(prefix="/video")
 
 
-@router.get("/", response_model=List[VideoRes])
+@router.get("/", response_model=List[VideoRes], tags=[Tags.get])
 async def get_videos(db: Session = Depends(get_db)):
     """ Operation to get all the videos in a database """
     videos = db.all(Video)
@@ -28,7 +29,7 @@ async def get_videos(db: Session = Depends(get_db)):
     return videos
 
 
-@router.get("/{video_id}", response_model=VideoRes)
+@router.get("/{video_id}", response_model=VideoRes, tags=[Tags.get])
 async def get_video(video_id: str, db: Session = Depends(get_db)):
     """ Operation to get a video with given id from database"""
     video = db.get(Video, video_id)
@@ -38,7 +39,8 @@ async def get_video(video_id: str, db: Session = Depends(get_db)):
     return video
 
 
-@router.get("/{video_id}/comments", response_model=List[CommentRes])
+@router.get("/{video_id}/comments", tags=[Tags.get],
+            response_model=List[CommentRes])
 async def get_video_comments(video_id: str, db: Session = Depends(get_db)):
     """ Operation to get all the comments linked to a video """
     video = db.get(Video, video_id)
@@ -48,7 +50,8 @@ async def get_video_comments(video_id: str, db: Session = Depends(get_db)):
     return video.comments
 
 
-@router.get("/{video_id}/video_file", response_class=FileResponse)
+@router.get("/{video_id}/video_file", tags=[Tags.get],
+            response_class=FileResponse)
 async def get_video_file(video_id: str,
                          db: Session = Depends(get_db)):
     """ Operation to get the video file linked to a video id """
@@ -59,7 +62,7 @@ async def get_video_file(video_id: str,
     return f"/tmp/uploads/{video.id}"
 
 
-@router.post("/{video_id}/save-file")
+@router.post("/{video_id}/save-file", tags=[Tags.post])
 async def save_video_file(video_id: str, video_file: UploadFile,
                           db: Session = Depends(get_db)):
     """ Operation to save a new video file associated with a course """
@@ -73,7 +76,8 @@ async def save_video_file(video_id: str, video_file: UploadFile,
     return {"video_url": f"{video_id}"}
 
 
-@router.post("/{course_id}/save-info", response_model=VideoRes)
+@router.post("/{course_id}/save-info", tags=[Tags.post],
+             response_model=VideoRes)
 async def create_video_data(req: VideoReq, course_id: str,
                             db: Session = Depends(get_db)):
     """ Operation to save a new video info into the database """
@@ -92,7 +96,8 @@ async def create_video_data(req: VideoReq, course_id: str,
     return video
 
 
-@router.put("/{course_id}/{video_id}", response_model=VideoRes)
+@router.put("/{course_id}/{video_id}", tags=[Tags.put],
+            response_model=VideoRes)
 async def update_video(req: VideoReq, course_id: str, video_id: str,
                        db: Session = Depends(get_db)):
     """ Operation to update a video detail """
@@ -110,7 +115,7 @@ async def update_video(req: VideoReq, course_id: str, video_id: str,
     return video
 
 
-@router.delete("/{course_id}/{video_id}")
+@router.delete("/{course_id}/{video_id}", tags=[Tags.delete])
 async def delete_video(course_id: str, video_id: str,
                        db: Session = Depends(get_db)):
     """ operation to remove a video from the video table """

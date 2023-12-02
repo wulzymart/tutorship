@@ -10,6 +10,7 @@ from fastapi import HTTPException
 from models.course import Course
 from models.review import Review
 from models.student import Student
+from routers.method_tags import Tags
 from schemas.review import ReviewReq
 from schemas.review import ReviewRes
 from sqlalchemy.orm import Session
@@ -18,7 +19,7 @@ from typing import List
 router = APIRouter(prefix="/review")
 
 
-@router.get("/", response_model=List[ReviewRes])
+@router.get("/", response_model=List[ReviewRes], tags=[Tags.get])
 async def get_reviews(db: Session = Depends(get_db)):
     """ Operation to list all revies in the reviews """
     reviews = db.all(Review)
@@ -26,7 +27,7 @@ async def get_reviews(db: Session = Depends(get_db)):
     return reviews
 
 
-@router.get("/{id}", response_model=ReviewRes)
+@router.get("/{id}", response_model=ReviewRes, tags=[Tags.get])
 async def get_review(id: str, db: Session = Depends(get_db)):
     """
     Operation to get a review with a given id from the reviews table
@@ -38,7 +39,8 @@ async def get_review(id: str, db: Session = Depends(get_db)):
     return review
 
 
-@router.post("/{student_id}/{course_id}", response_model=ReviewRes)
+@router.post("/{student_id}/{course_id}", tags=[Tags.post],
+             response_model=ReviewRes)
 async def create_review(req: ReviewReq, student_id: str,
                         course_id: str,  db: Session = Depends(get_db)):
     """ Operation to add a new review made by a student """
@@ -60,7 +62,7 @@ async def create_review(req: ReviewReq, student_id: str,
     return review
 
 
-@router.put("/{student_id}/{course_id}/{review_id}",
+@router.put("/{student_id}/{course_id}/{review_id}", tags=[Tags.put],
             response_model=ReviewRes)
 async def update_couse_review(req: ReviewReq,
                               student_id: str, course_id: str, review_id: str,
@@ -83,7 +85,7 @@ async def update_couse_review(req: ReviewReq,
     return review
 
 
-@router.delete("/{student_id}/{course_id}/{review_id}",
+@router.delete("/{student_id}/{course_id}/{review_id}", tags=[Tags.delete],
                response_model=ReviewRes)
 async def delete_course_review(req: ReviewReq,
                                student_id: str, course_id: str, review_id: str,
