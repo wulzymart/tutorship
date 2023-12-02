@@ -1,3 +1,4 @@
+"use client"
 import { ButtonInterface } from "@/app/interfaces/Interfaces";
 
 const Button = ({ text, handleClick }: ButtonInterface) => {

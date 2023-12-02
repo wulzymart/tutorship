@@ -92,12 +92,16 @@ const TutorsDashboard = () => {
       </section>
       <div className="bg-slate-50 p-10 rounded-lg mb-16 flex">
         <section className="w-1/2 px-5">
-          <Header3 text="Reviews"/>
-          <div><ReviewList/></div>
+          <Header3 text="Reviews" />
+          <div>
+            <ReviewList />
+          </div>
         </section>
         <section className="w-1/2 px-5">
-          <Header3 text="Scheduled Sessions"/>
-          <div><SessionsListTutor/></div>
+          <Header3 text="Scheduled Sessions" />
+          <div>
+            <SessionsListTutor />
+          </div>
         </section>
       </div>
     </div>

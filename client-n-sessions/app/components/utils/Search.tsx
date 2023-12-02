@@ -14,7 +14,7 @@ const Search = () => {
         value={searchKey}
         Icon={IoIosSearch}
         handleChange={(e) => {
-          setSearchkey(e.target.value);
+          setSearchkey(e.currentTarget.value);
         }}
       />
       <Button

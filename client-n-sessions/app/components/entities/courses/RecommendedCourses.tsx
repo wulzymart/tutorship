@@ -3,6 +3,7 @@ import Courses from "./Courses";
 import CoursesCarousel from "./CoursesCarousel";
 
 const RecommendedCourses = () => {
+  // const serverCourses = await fetch();
   const courses = [
     {
       id: "1",

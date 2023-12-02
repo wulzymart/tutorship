@@ -5,13 +5,19 @@ export interface SidebarEntry {
   link: string;
 }
 export interface TextInputInterface {
-  type: "text" | "password";
+  type: "text" | "password" | "number";
   name: string;
-  value: string;
+  value: ValueByType[this["type"]];
   placeholder?: string;
   Icon?: IconType;
-  handleChange: (e: React.FormEvent<HTMLInputElement> ) => void;
+  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }
+
+type ValueByType = {
+  text: string;
+  password: string;
+  number: number;
+};
 
 export interface ButtonInterface {
   text: string;
@@ -67,5 +73,5 @@ export interface ReviewCardInterface {
   rating: number;
   review: string;
   learner: string;
-  id: string
+  id: string;
 }
