@@ -6,7 +6,7 @@ const Thumbnail = ({ alt, src, width, height }: ImageThumbNailInterface) => {
       alt={alt}
       src={src}
       style={{ objectFit: "cover" }}
-      className="border-2 border-solid border-front"
+      className="border-2 border-solid border-front rounded-lg"
       width={width}
       height={height}
     />

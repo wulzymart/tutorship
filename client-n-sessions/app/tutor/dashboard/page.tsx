@@ -6,6 +6,7 @@ import Header5 from "@/app/components/utils/Header5";
 import RoundImage from "@/app/components/utils/RoundImage";
 import { course } from "@/app/data";
 import React from "react";
+import CourseCarousel from "./CourseCarousel";
 
 const TutorsDashboard = () => {
   const tutor = {
@@ -84,11 +85,12 @@ const TutorsDashboard = () => {
       </section>
       <section className=" bg-slate-50 p-10 rounded-lg mb-16">
         <Header3 text="My courses" />
-        <div className="flex flex-wrap">
+        <CourseCarousel courses={tutor.courses} />
+        {/* <div className="flex flex-wrap">
           {tutor.courses.map((course) => (
             <CourseInfoCard key={course.id} {...course} />
           ))}
-        </div>
+        </div> */}
       </section>
       <div className="bg-slate-50 p-10 rounded-lg mb-16 flex">
         <section className="w-1/2 px-5">

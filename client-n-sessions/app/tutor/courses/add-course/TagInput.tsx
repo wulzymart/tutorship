@@ -1,67 +1,62 @@
 "use client";
 import React, { useState } from "react";
-import { WithContext as ReactTags } from "react-tag-input";
+import Select from "react-select";
 
-interface Tag {
-  id: string;
-  text: string;
+interface CategorySelectorProps {
+  categories: string[];
+  selectedCategories: { label: string; value: string }[];
+  onSelectCategories: (categories: { label: string; value: string }[]) => void;
 }
 
-const suggestions: Tag[] = [
-  { id: "Thailand", text: "Thailand" },
-  { id: "India", text: "India" },
-  { id: "Vietnam", text: "Vietnam" },
-  { id: "Turkey", text: "Turkey" },
-];
+const CategorySelector: React.FC<CategorySelectorProps> = ({
+  categories,
+  selectedCategories,
+  onSelectCategories,
+}) => {
+  const options = categories.map((category) => ({
+    label: category,
+    value: category,
+  }));
 
-const KeyCodes = {
-  comma: 188,
-  enter: 13,
+  return (
+    <div>
+      <label>Select categories:</label>
+      <Select
+        isMulti
+        options={options}
+        value={selectedCategories}
+        onChange={(selectedOptions) =>
+          onSelectCategories(selectedOptions as any)
+        }
+      />
+    </div>
+  );
 };
 
-const delimiters = [KeyCodes.comma, KeyCodes.enter];
+const TagInput: React.FC = () => {
+  const [selectedCategories, setSelectedCategories] = useState<
+    { label: string; value: string }[]
+  >([]);
 
-const TagInput = () => {
-  const [tags, setTags] = React.useState<Tag[]>([]);
+  const categories = ["Category 1", "Category 2", "Category 3"];
 
-  const handleDelete = (i: number) => {
-    setTags(tags.filter((tag, index) => index !== i));
-  };
-
-  const handleAddition = (tag: Tag) => {
-    setTags([...tags, tag]);
-  };
-
-  const handleDrag = (tag: Tag, currPos: number, newPos: number) => {
-    const newTags = tags.slice();
-
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
-
-    // re-render
-    setTags(newTags);
-  };
-
-  const handleTagClick = (index: number) => {
-    console.log("The tag at index " + index + " was clicked");
+  const handleSelectCategories = (
+    categories: { label: string; value: string }[]
+  ) => {
+    setSelectedCategories(categories);
   };
 
   return (
-    <div className="app">
-      <h1> React Tags Example </h1>
-      <div>
-        <ReactTags
-          tags={tags}
-          suggestions={suggestions}
-          delimiters={delimiters}
-          handleDelete={handleDelete}
-          handleAddition={handleAddition}
-          handleDrag={handleDrag}
-          handleTagClick={handleTagClick}
-          inputFieldPosition="bottom"
-          autocomplete
-        />
-      </div>
+    <div>
+      <CategorySelector
+        categories={categories}
+        selectedCategories={selectedCategories}
+        onSelectCategories={handleSelectCategories}
+      />
+      <p>
+        Selected categories:{" "}
+        {selectedCategories.map((category) => category.label).join(", ")}
+      </p>
     </div>
   );
 };
