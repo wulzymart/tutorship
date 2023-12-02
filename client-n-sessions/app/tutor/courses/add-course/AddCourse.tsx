@@ -1,17 +1,27 @@
-"use client";
-
 import Button from "@/app/components/utils/Button";
 import TextArea from "@/app/components/utils/TextArea";
 import TextInput from "@/app/components/utils/TextInput";
 import { useState } from "react";
 import TagInput from "./TagInput";
+import { redirect } from "next/navigation";
 
-const AddCourseUtil = () => {
+const AddCourseUtil = async () => {
   const [courseName, setCourseName] = useState("");
   const [about, setAbout] = useState("");
   const [free, setFree] = useState(false);
   const [price, setPrice] = useState(0);
-  const [categories, setCategorie] = useState([])
+  const [categories, setCategorie] = useState([]);
+  const handleAddCourse = async () => {
+    const res = await fetch(
+      "http://127.0.0.1/course/40f2ba49-6684-4a01-8cef-f5c6f91f2563",
+      {
+        method: "POST",
+        body: JSON.stringify({ title: courseName, about, price, free }),
+      }
+    );
+    const courseInfo = await res.json();
+    redirect(`/tutor/coures/${courseInfo.id}`);
+  };
   return (
     <div className="mb-10">
       <form action="">
@@ -70,7 +80,7 @@ const AddCourseUtil = () => {
           )}
         </div>
         <div className="text-right">
-          <Button text="Add" handleClick={() => console.log(courseName)} />
+          <Button text="Add" handleClick={handleAddCourse} />
         </div>
       </form>
     </div>

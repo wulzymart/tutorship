@@ -11,12 +11,11 @@ function log<T>(item: T) {
   console.log(item);
 }
 const TutorsDashboard = async () => {
-  const id = "87ca35cc-c775-42eb-9ef3-6df4938a4372";
-  const tutorFromServer = await fetch(
-    "http://127.0.0.1:8000/tutor/87ca35cc-c775-42eb-9ef3-6df4938a4372",
-    { cache: "no-cache" }
-  );
-  log(tutorFromServer);
+  const id = "40f2ba49-6684-4a01-8cef-f5c6f91f2563";
+  const tutorResponse = await fetch(`http://127.0.0.1:8000/tutor/${id}`, {
+    cache: "no-cache",
+  });
+  const tutorFromServer = await tutorResponse.json();
 
   const tutor = {
     first_name: "John",
