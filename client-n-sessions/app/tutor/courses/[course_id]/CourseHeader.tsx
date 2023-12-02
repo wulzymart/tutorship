@@ -7,11 +7,17 @@ const CourseHeader = () => {
   return (
     <section className="flex justify-between items-center mb-20">
       <Header2 text="Course title" />
-      <div className="flex gap-10">
+      <div className="flex gap-5">
         <Button
           text="Publish"
           handleClick={() => {
             console.log("publish");
+          }}
+        />
+        <Button
+          text="Edit"
+          handleClick={() => {
+            console.log("Edit");
           }}
         />
         <Button

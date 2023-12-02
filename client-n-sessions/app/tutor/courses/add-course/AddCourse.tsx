@@ -11,8 +11,9 @@ const AddCourseUtil = () => {
   const [about, setAbout] = useState("");
   const [free, setFree] = useState(false);
   const [price, setPrice] = useState(0);
+  const [categories, setCategorie] = useState([])
   return (
-    <div>
+    <div className="mb-10">
       <form action="">
         <div className="flex gap-10 items-center mb-10">
           <label className="font-medium" htmlFor="title">
@@ -55,7 +56,7 @@ const AddCourseUtil = () => {
             />
           </div>
           {!free && (
-            <div className="flex gap-4 items-center w-[50px]">
+            <div className="flex gap-4 items-center w-[300px]">
               <label className="font-medium" htmlFor="Price">
                 Price($)
               </label>
@@ -68,7 +69,9 @@ const AddCourseUtil = () => {
             </div>
           )}
         </div>
-        <Button text="Add" handleClick={() => console.log(courseName)} />
+        <div className="text-right">
+          <Button text="Add" handleClick={() => console.log(courseName)} />
+        </div>
       </form>
     </div>
   );

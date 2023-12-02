@@ -24,7 +24,7 @@ body {
 
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
-    width: 2px;
+    width: 1px;
     height: 1px;
   }
 
