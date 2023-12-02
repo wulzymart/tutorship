@@ -10,6 +10,7 @@ from fastapi import HTTPException
 from models.comment import Comment
 from models.student import Student
 from models.video import Video
+from routers.method_tags import Tags
 from schemas.comment import CommentReq
 from schemas.comment import CommentRes
 from sqlalchemy.orm import Session
@@ -18,7 +19,7 @@ from typing import List
 router = APIRouter(prefix="/comment")
 
 
-@router.get("/", response_model=List[CommentRes])
+@router.get("/", response_model=List[CommentRes], tags=[Tags.get])
 async def get_comments(db: Session = Depends(get_db)):
     """ Operation to get all comments in the database """
     comments = db.all(Comment)
@@ -26,7 +27,7 @@ async def get_comments(db: Session = Depends(get_db)):
     return comments
 
 
-@router.get("/{comment_id}", response_model=CommentRes)
+@router.get("/{comment_id}", response_model=CommentRes, tags=[Tags.get])
 async def get_comment(comment_id: str, db: Session = Depends(get_db)):
     """ Operation to get a comment with the id supplied in the path """
     commment = db.get(Comment, comment_id)
@@ -36,7 +37,8 @@ async def get_comment(comment_id: str, db: Session = Depends(get_db)):
     return comment
 
 
-@router.post("/{student_id}/{video_id}", response_model=CommentRes)
+@router.post("/{student_id}/{video_id}", tags=[Tags.post],
+             response_model=CommentRes)
 async def create_comment(req: CommentReq, student_id: str, video_id: str,
                          db: Session = Depends(get_db)):
     """ Operation to create a new comment for a new video """
@@ -59,7 +61,8 @@ async def create_comment(req: CommentReq, student_id: str, video_id: str,
     return comment
 
 
-@router.put("/{video_id}/{comment_id}", response_model=CommentRes)
+@router.put("/{video_id}/{comment_id}", tags=[Tags.put],
+            response_model=CommentRes)
 async def update_video_comment(req: CommentReq, video_id: str,
                                comment_id: str, db: Session = Depends(get_db)):
     """ Operation that controls the udpating of a comment """
@@ -77,7 +80,7 @@ async def update_video_comment(req: CommentReq, video_id: str,
     return comment
 
 
-@router.delete("/{video_id}/{comment_id}")
+@router.delete("/{video_id}/{comment_id}", tags=[Tags.delete])
 async def delete_comment(video_id: str, comment_id: str,
                          db: Session = Depends(get_db)):
     """ Operaton to delete a comment from the comments database """

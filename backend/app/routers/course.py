@@ -9,9 +9,11 @@ from fastapi import Depends
 from fastapi import HTTPException
 from models.course import Course
 from models.tutor import Tutor
+from routers.method_tags import Tags
 from schemas.course import CourseReq
 from schemas.course import CourseRes
 from schemas.review import ReviewRes
+from schemas.student import StudentRes
 from schemas.video import VideoRes
 from sqlalchemy.orm import Session
 from typing import List
@@ -19,7 +21,7 @@ from typing import List
 router = APIRouter(prefix="/course")
 
 
-@router.get("/", response_model=List[CourseRes])
+@router.get("/", response_model=List[CourseRes], tags=[Tags.get])
 async def get_courses(db: Session = Depends(get_db)):
     """ Operation to get all courses in the courses table """
     courses = db.all(Course)
@@ -27,17 +29,18 @@ async def get_courses(db: Session = Depends(get_db)):
     return courses
 
 
-@router.get("/{id}", response_model=CourseRes)
-async def get_course(id: str, db: Session = Depends(get_db)):
+@router.get("/{course_id}", response_model=CourseRes, tags=[Tags.get])
+async def get_course(course_id: str, db: Session = Depends(get_db)):
     """ Operation to get a course with a given id """
-    course = db.get(Course, id)
+    course = db.get(Course, course_id)
     if not course:
         raise HTTPException(detail="course not found", status_code=404)
 
     return course
 
 
-@router.get("/{course_id}/reviews", response_model=List[ReviewRes])
+@router.get("/{course_id}/reviews", tags=[Tags.get],
+            response_model=List[ReviewRes])
 async def get_course_reviews(course_id: str, db: Session = Depends(get_db)):
     """ Operation to get all course reviews """
     course = db.get(Course, course_id)
@@ -47,7 +50,18 @@ async def get_course_reviews(course_id: str, db: Session = Depends(get_db)):
     return course.reviews
 
 
-@router.get("/{course_id}/videos", response_model=List[VideoRes])
+@router.get("/{course_id}/students", tags=[Tags.get],
+            response_model=List[StudentRes])
+async def get_course_students(course_id: str, db: Session = Depends(get_db)):
+    course = db.get(Course, course_id)
+    if not course:
+        raise HTTPException(detail="course not found", status_code=404)
+
+    return course.students
+
+
+@router.get("/{course_id}/videos", tags=[Tags.get],
+            response_model=List[VideoRes])
 async def get_course_videos(course_id: str, db: Session = Depends(get_db)):
     """ Operation to get all the courses linked to a course """
     course = db.get(Course, course_id)
@@ -57,7 +71,7 @@ async def get_course_videos(course_id: str, db: Session = Depends(get_db)):
     return course.videos
 
 
-@router.post("/{tutor_id}", response_model=CourseRes)
+@router.post("/{tutor_id}", response_model=CourseRes, tags=[Tags.post])
 async def create_course(req: CourseReq, tutor_id: str,
                         db: Session = Depends(get_db)):
     """ Operation to allow an author create a new course """
@@ -72,7 +86,8 @@ async def create_course(req: CourseReq, tutor_id: str,
     return course
 
 
-@router.put("/{tutor_id}/{course_id}", response_model=CourseRes)
+@router.put("/{tutor_id}/{course_id}", tags=[Tags.put],
+            response_model=CourseRes)
 async def update_course(req: CourseReq, tutor_id: str, course_id: str,
                         db: Session = Depends(get_db)):
     """ Operation to update a course information by an author """
@@ -88,7 +103,7 @@ async def update_course(req: CourseReq, tutor_id: str, course_id: str,
     return course
 
 
-@router.delete("{tutor_id}/{course_id}")
+@router.delete("{tutor_id}/{course_id}", tags=[Tags.delete])
 async def delete_course(tutor_id: str, course_id: str,
                         db: Session = Depends(get_db)):
     """

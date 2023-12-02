@@ -14,8 +14,8 @@ class VideoReq(BaseModel):
     This model validates the video request data
     """
     title: str
-    pay_cat: str
-    price: int
+    paid: bool
+    published: bool = True
 
 
 class VideoRes(Base, VideoReq):

@@ -4,14 +4,14 @@ This module contains the base class containing the pydantic fields to be
 inherited by the tutor and student pydantic models
 """
 from datetime import datetime
-from pydantic import Field
+from pydantic import EmailStr
 
 
 class Profile():
     """
     Profile pydantic class to be inherited by the tutor and student model
     """
-    email: str
+    email: EmailStr
     firstname: str
     lastname: str
     password: str

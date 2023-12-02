@@ -3,6 +3,7 @@
 This module is the main module that fun the fastapi application
 """
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from routers import comment
 from routers import course
 from routers import review
@@ -14,6 +15,13 @@ from routers import video
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_headers=["*"],
+    allow_methods=["*"],
+    allow_credentials=["*"]
+    )
 app.include_router(comment.router)
 app.include_router(course.router)
 app.include_router(review.router)

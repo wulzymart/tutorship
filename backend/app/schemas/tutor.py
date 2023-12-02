@@ -4,6 +4,7 @@ This module contains the pydantic model for validation of data to be sent
 to or retrieved from the tutor table
 """
 from pydantic import BaseModel
+from pydantic import HttpUrl
 from schemas.basemodel import Base
 from schemas.course import CourseRes
 from schemas.profile import Profile
@@ -19,7 +20,7 @@ class TutorReq(Profile, BaseModel):
     bio: str
     experience: str
     certifications: str
-    links: str
+    links: HttpUrl
     contact: str
     subjects: str
 
