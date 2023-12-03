@@ -1,30 +1,47 @@
+"use client"
 import Button from "@/app/components/utils/Button";
 import TextArea from "@/app/components/utils/TextArea";
 import TextInput from "@/app/components/utils/TextInput";
 import { useState } from "react";
 import TagInput from "./TagInput";
-import { redirect } from "next/navigation";
 
-const AddCourseUtil = async () => {
+import { useRouter } from 'next/navigation'
+
+
+const AddCourseUtil =  () => {
   const [courseName, setCourseName] = useState("");
   const [about, setAbout] = useState("");
   const [free, setFree] = useState(false);
   const [price, setPrice] = useState(0);
   const [categories, setCategorie] = useState([]);
+  const router = useRouter()
+
   const handleAddCourse = async () => {
+    
+    
     const res = await fetch(
-      "http://127.0.0.1/course/40f2ba49-6684-4a01-8cef-f5c6f91f2563",
+      "https://bookish-potato-j9vqw47rxg5h5pw6-8000.app.github.dev/course/40f2ba49-6684-4a01-8cef-f5c6f91f2563",
       {
         method: "POST",
+        mode: "cors",
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
         body: JSON.stringify({ title: courseName, about, price, free }),
       }
     );
     const courseInfo = await res.json();
-    redirect(`/tutor/coures/${courseInfo.id}`);
+    console.log(`/tutor/courses/${courseInfo.id}`);
+    router.push(`/tutor/courses/${courseInfo.id}`);
   };
   return (
     <div className="mb-10">
-      <form action="">
+      <form onSubmit={async (e) => {
+        e.preventDefault()
+        await handleAddCourse()
+      }}>
         <div className="flex gap-10 items-center mb-10">
           <label className="font-medium" htmlFor="title">
             Title
@@ -80,7 +97,7 @@ const AddCourseUtil = async () => {
           )}
         </div>
         <div className="text-right">
-          <Button text="Add" handleClick={handleAddCourse} />
+          <Button text="Add" type="submit" handleClick={handleAddCourse} />
         </div>
       </form>
     </div>

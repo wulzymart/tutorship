@@ -21,7 +21,8 @@ type ValueByType = {
 
 export interface ButtonInterface {
   text: string;
-  handleClick: () => void;
+  handleClick?: () => void;
+  type?: "button" | "submit" | "reset" | undefined
 }
 
 export interface RoundImageInterface {
