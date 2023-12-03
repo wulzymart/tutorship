@@ -5,10 +5,10 @@ import Header2 from "@/app/components/utils/Header2";
 import Modal from "@/app/components/utils/Modal";
 import AddCourseUtil from "../add-course/AddCourse";
 
-const CourseHeader = () => {
+const CourseHeader = ({ title, id }: { title: string; id: string }) => {
   return (
     <section className="flex justify-between items-center mb-20">
-      <Header2 text="Course title" />
+      <Header2 text={title} />
       <div className="flex gap-5">
         <Button
           text="Publish"

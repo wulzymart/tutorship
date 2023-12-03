@@ -1,39 +1,22 @@
-import Button from "@/app/components/utils/Button";
-import Header2 from "@/app/components/utils/Header2";
 import CourseHeader from "./CourseHeader";
-import VideoList from "./VideoList";
-import Header5 from "@/app/components/utils/Header5";
 import Header3 from "@/app/components/utils/Header3";
 import ReviewList from "@/app/components/entities/reviews/ReviewList";
 import VideoLogic from "./VideoLogic";
 
-const SingleCourse = () => {
+const SingleCourse = async ({ params }: { params: { course_id: string } }) => {
+  const { course_id } = params;
+  const courseData = await fetch(`http://127.0.0.1:8000/course/${course_id}`, {
+    next: { revalidate: 24 * 60 * 60 },
+  }).then((res) => res.json());
   return (
     <div>
-      <CourseHeader />
+      <CourseHeader title={courseData.title} id={courseData.id} />
       <div className="flex gap-10">
         <section className="w-2/3">
           <div>
             <Header3 text="About" />
             <div>
-              <p>
-                "But I must explain to you how all this mistaken idea of
-                denouncing pleasure and praising pain was born and I will give
-                you a complete account of the system, and expound the actual
-                teachings of the great explorer of the truth, the master-builder
-                of human happiness. No one rejects, dislikes, or avoids pleasure
-                itself, because it is pleasure, but because those who do not
-                know how to pursue pleasure rationally encounter consequences
-                that are extremely painful. Nor again is there anyone who loves
-                or pursues or desires to obtain pain of itself, because it is
-                pain, but because occasionally circumstances occur in which toil
-                and pain can procure him some great pleasure. To take a trivial
-                example, which of us ever undertakes laborious physical
-                exercise, except to obtain some advantage from it? But who has
-                any right to find fault with a man who chooses to enjoy a
-                pleasure that has no annoying consequences, or one who avoids a
-                pain that produces no resultant pleasure?"
-              </p>
+              <p>{courseData.about}</p>
             </div>
           </div>
           <div>

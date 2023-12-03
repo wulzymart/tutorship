@@ -1,7 +1,15 @@
 import CourseInfoCard from "@/app/components/entities/courses/CourseInfoCard";
-import React from "react";
+import { headers } from "next/headers";
 
-const CoursesPage = () => {
+const CoursesPage = async () => {
+  const headersList = headers();
+  const tutorId = headersList.get("userId");
+  const tutorCourses = await fetch(
+    `http://127.0.0.1:8000/tutor/${tutorId}/courses`,
+    {
+      cache: "no-cache",
+    }
+  ).then((res) => res.json());
   const courses = [
     {
       id: "1",
@@ -55,7 +63,7 @@ const CoursesPage = () => {
   return (
     <div>
       <div className="flex flex-wrap justify-center">
-        {courses.map((course) => (
+        {tutorCourses.map((course: any) => (
           <CourseInfoCard key={course.id} {...course} />
         ))}
       </div>

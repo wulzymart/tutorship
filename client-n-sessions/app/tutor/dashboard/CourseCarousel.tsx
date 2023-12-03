@@ -9,7 +9,7 @@ const CourseCarousel = ({
 }: {
   courses: {
     id: string;
-    course_name: string;
+    title: string;
     thumbnail_url: string;
     rating: number;
     sales: number;
