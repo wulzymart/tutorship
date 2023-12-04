@@ -7,6 +7,7 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from dependencies.engine import get_db
+from misc.safesphere import encrypt
 from models.tutor import Tutor
 from routers.method_tags import Tags
 from schemas.course import CourseRes
@@ -15,6 +16,7 @@ from schemas.student import StudentRes
 from schemas.tutor import TutorReq
 from schemas.tutor import TutorRes
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from typing import List
 
 router = APIRouter(prefix="/tutor")
@@ -76,31 +78,39 @@ async def get_tutor_student(tutor_id: str, db: Session = Depends(get_db)):
              response_model_exclude=["password"])
 async def create_tutor(req: TutorReq, db: Session = Depends(get_db)):
     """ Operation to create a new tutor """
-    tutor = Tutor(**dict(req))
-    db.new(tutor)
-    db.save()
+    try:
+        req.password = encrypt(req.password)
+        tutor = Tutor(**dict(req))
+        db.new(tutor)
+        db.save()
 
-    return tutor
+        return tutor
+    except IntegrityError as e:
+        raise HTTPException(detail="Email already exists", status_code=409)
 
 
-@router.put("/{id}", response_model=TutorRes, tags=[Tags.put],
+@router.put("/{tutor_id}", response_model=TutorRes, tags=[Tags.put],
             response_model_exclude=["password"])
-async def update_tutor(req: TutorReq, id: str, db: Session = Depends(get_db)):
+async def update_tutor(req: TutorReq, tutor_id: str,
+                       db: Session = Depends(get_db)):
     """ Operation to update the content of an existing tutor """
-    tutor = db.get(Tutor, id)
+    tutor = db.get(Tutor, tutor_id)
     if not tutor:
         raise HTTPException(detail="tutor not found", status_code=404)
 
-    db.update(tutor, **dict(req))
-    db.save()
+    try:
+        db.update(tutor, **dict(req))
+        db.save()
 
-    return tutor
+        return tutor
+    except IntegrityError as e:
+        raise HTTPException(detail="Email already exists", status_code=409)
 
 
-@router.delete("/{id}", tags=[Tags.delete])
-async def delete_tutor(id: str, db: Session = Depends(get_db)):
+@router.delete("/{tutor_id}", tags=[Tags.delete])
+async def delete_tutor(tutor_id: str, db: Session = Depends(get_db)):
     """ Operation to delete a tutor from the database"""
-    tutor = db.get(Tutor, id)
+    tutor = db.get(Tutor, tutor_id)
     if not tutor:
         raise HTTPException(detail="tutor not found", status_code=404)
 

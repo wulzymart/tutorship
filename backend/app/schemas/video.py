@@ -14,7 +14,8 @@ class VideoReq(BaseModel):
     This model validates the video request data
     """
     title: str
-    paid: bool
+    description: str
+    free: bool = False
     published: bool = False
 
 

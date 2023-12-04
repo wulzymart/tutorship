@@ -3,7 +3,7 @@
 This module contains the base class containing the pydantic fields to be
 inherited by the tutor and student pydantic models
 """
-from datetime import datetime
+from datetime import date
 from pydantic import EmailStr
 
 
@@ -18,4 +18,4 @@ class Profile():
     address: str
     state: str
     country: str
-    dob: datetime
+    dob: date

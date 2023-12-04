@@ -6,6 +6,7 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from dependencies.engine import get_db
+from misc.safesphere import encrypt
 from models.course import Course
 from models.student import Student
 from models.session import Session as SS
@@ -19,6 +20,7 @@ from schemas.student import StudentReq
 from schemas.student import StudentRes
 from schemas.tutor import TutorRes
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from typing import List
 
 router = APIRouter(prefix="/student")
@@ -131,11 +133,15 @@ async def get_student_courses(student_id: str, db: Session = Depends(get_db)):
              response_model_exclude=["password"])
 async def create_new_student(req: StudentReq, db: Session = Depends(get_db)):
     """ Operation to add new student to the database """
-    student = Student(**dict(req))
-    db.new(student)
-    db.save()
+    try:
+        req.password = encrypt(req.password)
+        student = Student(**dict(req))
+        db.new(student)
+        db.save()
 
-    return student
+        return student
+    except IntegrityError as e:
+        raise HTTPException(detail="Email already exist", status_code=409)
 
 
 @router.post("/{student_id}/tutors/{tutor_id}", tags=[Tags.post],
@@ -179,26 +185,30 @@ async def add_student_course(student_id: str, course_id: str,
     return course
 
 
-@router.put("/{id}", response_model=StudentRes, tags=[Tags.put],
+@router.put("/{student_id}", response_model=StudentRes, tags=[Tags.put],
             response_model_exclude=["password"])
-def update_student(req: StudentReq, id: str, db: Session = Depends(get_db)):
+def update_student(req: StudentReq, student_id: str,
+                   db: Session = Depends(get_db)):
     """ Operation to update a student data in the student table """
-    student = db.get(Student, id)  # Optional pydantic fields to be worked on
+    student = db.get(Student, student_id)
     if not student:
         raise HTTPException(detail="Student not found",
                             status_code=404)
 
-    db.update(student, **dict(req))
-    db.save()
-    db.reload()
+    try:
+        db.update(student, **dict(req))
+        db.save()
+        db.reload()
 
-    return student
+        return student
+    except IntegrityError as e:
+        raise HTTPException(detail="Email already exists", status_code=409)
 
 
-@router.delete("/{id}", tags=[Tags.delete])
-async def delete_student(id: str, db: Session = Depends(get_db)):
+@router.delete("/{student_id}", tags=[Tags.delete])
+async def delete_student(student_id: str, db: Session = Depends(get_db)):
     """ Operation to delete a student from the database """
-    student = db.get(Student, id)
+    student = db.get(Student, student_id)
     if not student:
         raise HTTPException(detail="Student not found",
                             status_code=404)

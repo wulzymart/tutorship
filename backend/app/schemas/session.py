@@ -6,6 +6,7 @@ out from the session table
 from schemas.basemodel import Base
 from datetime import datetime
 from pydantic import BaseModel
+from pydantic import HttpUrl
 
 
 class SessionReq(BaseModel):
@@ -14,7 +15,7 @@ class SessionReq(BaseModel):
     """
     about: str
     datetime: datetime
-    link: str
+    link: HttpUrl
 
 
 class SessionRes(Base, SessionReq):
