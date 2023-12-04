@@ -88,3 +88,7 @@ class Engine():
     def new(self, obj):
         """ Add an object to the current database session """
         self.__session.add(obj)
+
+    def get_user_by_email(self, cls, username):
+        """ Method to query the database and filter using email """
+        return self.__session.query(cls).filter_by(email=username).first()
