@@ -6,6 +6,7 @@ from the videos table
 from schemas.basemodel import Base
 from schemas.comment import CommentRes
 from pydantic import BaseModel
+from pydantic import HttpUrl
 from typing import List
 
 
@@ -25,4 +26,5 @@ class VideoRes(Base, VideoReq):
     """
     course_id: str
     tutor_id: str
+    #video_url: HttpUrl
     video_url: str
