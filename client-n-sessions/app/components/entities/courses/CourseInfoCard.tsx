@@ -5,7 +5,7 @@ import { CourseInfoCardInterface } from "@/app/interfaces/Interfaces";
 
 const CourseInfoCard = ({
   id,
-  course_name,
+  title,
   tutor_name,
   registeredCourse = false,
   thumbnail_url,
@@ -14,13 +14,8 @@ const CourseInfoCard = ({
 }: CourseInfoCardInterface) => {
   return (
     <div className="p-5 text-main2">
-      <Thumbnail
-        alt={course_name}
-        src={thumbnail_url}
-        height={356}
-        width={200}
-      />
-      <Header5 text={course_name} />
+      <Thumbnail alt={title} src={thumbnail_url} height={356} width={200} />
+      <Header5 text={title} />
       <p className="font-medium text-[16px]">{tutor_name}</p>
       <div className="text-sm flex justify-between">
         <p className="">{registeredCourse ? "Your Rating" : "Rating"}</p>

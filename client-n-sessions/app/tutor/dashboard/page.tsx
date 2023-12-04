@@ -1,22 +1,36 @@
-import CourseInfoCard from "@/app/components/entities/courses/CourseInfoCard";
 import ReviewList from "@/app/components/entities/reviews/ReviewList";
 import SessionsListTutor from "@/app/components/entities/sessions/SessionsListTutor";
 import Header3 from "@/app/components/utils/Header3";
-import Header5 from "@/app/components/utils/Header5";
 import RoundImage from "@/app/components/utils/RoundImage";
-import { course } from "@/app/data";
 import React from "react";
 import CourseCarousel from "./CourseCarousel";
+import { headers } from "next/headers";
 function log<T>(item: T) {
   console.log(item);
 }
-const TutorsDashboard = async () => {
-  const id = "87ca35cc-c775-42eb-9ef3-6df4938a4372";
-  const tutorFromServer = await fetch(
-    "http://127.0.0.1:8000/tutor/87ca35cc-c775-42eb-9ef3-6df4938a4372",
-    { cache: "no-cache" }
-  );
-  log(tutorFromServer);
+const TutorsDashboard = async (props: any) => {
+  log(props);
+  const headersList = headers();
+  const id = headersList.get("userId");
+  const tutorResponse = await fetch(`http://127.0.0.1:8000/tutor/${id}`, {
+    cache: "no-cache",
+  });
+  const tutorFromServer = await tutorResponse.json();
+  const tutorCourses = await fetch(
+    `http://127.0.0.1:8000/tutor/${id}/courses`,
+    {
+      cache: "no-cache",
+    }
+  ).then((res) => res.json());
+  tutorCourses.forEach(function <T extends (typeof tutor.courses)[0]>(
+    element: T
+  ) {
+    element.thumbnail_url =
+      "https://idreamcareer.com/wp-content/uploads/2023/06/BE-Courses.webp";
+    element.rating = 4.9;
+    element.sales = 567;
+  });
+  log(tutorCourses);
 
   const tutor = {
     first_name: "John",
@@ -94,7 +108,7 @@ const TutorsDashboard = async () => {
       </section>
       <section className=" bg-slate-50 p-10 rounded-lg mb-16">
         <Header3 text="My courses" />
-        <CourseCarousel courses={tutor.courses} />
+        <CourseCarousel courses={tutorCourses} />
         {/* <div className="flex flex-wrap">
           {tutor.courses.map((course) => (
             <CourseInfoCard key={course.id} {...course} />

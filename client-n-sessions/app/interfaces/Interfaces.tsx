@@ -21,7 +21,8 @@ type ValueByType = {
 
 export interface ButtonInterface {
   text: string;
-  handleClick: () => void;
+  handleClick?: () => void;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 export interface RoundImageInterface {
@@ -47,7 +48,7 @@ export interface ImageThumbNailInterface {
 
 export interface CourseInfoCardInterface {
   id: string;
-  course_name: string;
+  title: string;
   tutor_name?: string;
   registeredCourse?: boolean;
   thumbnail_url: string;
