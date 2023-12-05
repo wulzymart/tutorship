@@ -22,10 +22,10 @@ from schemas.video import VideoRes
 from sqlalchemy.orm import Session
 from typing import List
 
-router = APIRouter(prefix="/video")
+router = APIRouter()
 
 
-@router.get("{student_id}/course/{course_id}/videos", tags=[Tags.get],
+@router.get("/{student_id}/course/{course_id}/videos", tags=[Tags.get],
             response_model=List[VideoRes])
 async def get_videos(student_id: str, course_id: str,
                      db: Session = Depends(get_db),
@@ -43,7 +43,7 @@ async def get_videos(student_id: str, course_id: str,
     return course.videos
 
 
-@router.get("{student_id}/course/{course_id}/video-data/{video_id}",
+@router.get("/{student_id}/course/{course_id}/video-data/{video_id}",
             response_model=VideoRes,
             tags=[Tags.get])
 async def get_video(student_id: str, course_id: str, video_id: str,
@@ -66,11 +66,10 @@ async def get_video(student_id: str, course_id: str, video_id: str,
     return video
 
 
-@router.get("{student_id}/course/{course_id}/video-file/{video_id}",
+@router.get("/{student_id}/course/{course_id}/video-file/{video_id}",
             tags=[Tags.get], response_class=FileResponse)
-async def get_video_file(response: Response, student_id: str,
-                         course_id: str, video_id: str,
-                         db: Session = Depends(get_db),
+async def get_video_file(student_id: str, course_id: str,
+                         video_id: str, db: Session = Depends(get_db),
                          token: str = Depends(oauth2_scheme)):
     """ Operation to get the video file linked to a video id """
     verify_token(student_id, token)
@@ -86,7 +85,8 @@ async def get_video_file(response: Response, student_id: str,
     if not video:
         raise HTTPException(detail="Video not found", status_code=404)
 
-    header_model = VideoRes(**dict(video))
-    response.headers["X-metadata"] = header_model.model_dump_json()
+    header_model = VideoRes(**(video.to_dict()))
+    headers = {"X-metadata": header_model.model_dump_json()}
 
-    return f"/tmp/uploads/{video.id}"
+    return FileResponse(f"/tmp/uploads/{video.id}", headers=headers,
+                        media_type="video/mp4")

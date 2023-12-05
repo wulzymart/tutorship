@@ -74,9 +74,8 @@ async def get_video_comments(course_id: str, tutor_id: str,
 
 @router.get("/{tutor_id}/course/{course_id}/video_file/{video_id}",
             tags=[Tags.get], response_class=FileResponse)
-async def get_video_file(response: Response, tutor_id: str,
-                         course_id: str, video_id: str,
-                         db: Session = Depends(get_db),
+async def get_video_file(tutor_id: str, course_id: str,
+                         video_id: str, db: Session = Depends(get_db),
                          token: str = Depends(oauth2_scheme)):
     """ Operation to get the video file linked to a video id """
     verify_token(tutor_id, token)
@@ -93,9 +92,10 @@ async def get_video_file(response: Response, tutor_id: str,
         raise HTTPException(detail="Video not found", status_code=404)
 
     header_model = VideoRes(**(video.to_dict()))
-    response.headers["X-metadata"] = header_model.model_dump_json()
+    headers = {"X-metadata": header_model.model_dump_json()}
 
-    return f"/tmp/uploads/{video.id}"
+    return FileResponse(f"/tmp/uploads/{video.id}", headers=headers,
+                        media_type="video/mp4")
 
 
 @router.post("/{tutor_id}/course/{course_id}/save-video",
