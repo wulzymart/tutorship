@@ -55,7 +55,7 @@ async def get_session(tutor_id: str, session_id: str,
     return session
 
 
-@router.get("/{tutor_id}/session/students", tags=[Tags.get],
+@router.get("/{tutor_id}/session/{session_id}/students", tags=[Tags.get],
             response_model=List[StudentRes])
 async def get_session_students(tutor_id: str, session_id: str,
                                db: SS = Depends(get_db),
@@ -92,7 +92,7 @@ async def create_session(req: SessionReq, tutor_id: str,
     return session
 
 
-@router.put("/{tutor_id}/{session_id}/update_session", tags=[Tags.put],
+@router.put("/{tutor_id}/session/{session_id}/update_session", tags=[Tags.put],
             response_model=SessionRes)
 async def update_session(req: SessionReq, tutor_id: str, session_id: str,
                          db: SS = Depends(get_db),
@@ -112,7 +112,7 @@ async def update_session(req: SessionReq, tutor_id: str, session_id: str,
     return session
 
 
-@router.delete("/{tutor_id}/{session_id}", tags=[Tags.delete])
+@router.delete("/{tutor_id}/session/{session_id}", tags=[Tags.delete])
 async def delete_session(tutor_id: str, session_id: str,
                          db: SS = Depends(get_db),
                          token: str = Depends(oauth2_scheme)):
@@ -126,6 +126,5 @@ async def delete_session(tutor_id: str, session_id: str,
         raise HTTPException(detail="session not found", status_code=404)
 
     db.delete(session)
-    db.save()
 
     return {}

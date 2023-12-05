@@ -12,6 +12,7 @@ from misc.gen_tok import oauth2_scheme
 from models.course import Course
 from models.review import Review
 from models.student import Student
+from models.tutor import Tutor
 from routers.method_tags import Tags
 from schemas.review import ReviewReq
 from schemas.review import ReviewRes
@@ -21,7 +22,7 @@ from typing import List
 router = APIRouter()
 
 
-@router.get("{tutor_id}/course/{course_id}/course_reviews", tags=[Tags.get],
+@router.get("/{tutor_id}/course/{course_id}/reviews", tags=[Tags.get],
             response_model=List[ReviewRes])
 async def get_course_reviews(tutor_id: str, course_id: str,
                              db: Session = Depends(get_db),

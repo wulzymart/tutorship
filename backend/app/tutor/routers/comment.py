@@ -10,7 +10,9 @@ from fastapi import HTTPException
 from misc.gen_tok import verify_token
 from misc.gen_tok import oauth2_scheme
 from models.comment import Comment
+from models.course import Course
 from models.student import Student
+from models.tutor import Tutor
 from models.video import Video
 from routers.method_tags import Tags
 from schemas.comment import CommentReq

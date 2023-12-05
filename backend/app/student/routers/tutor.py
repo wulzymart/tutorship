@@ -56,10 +56,10 @@ async def get_tutor(student_id: str, tutor_id: str,
     return tutor
 
 
-@router.post("{student_id}/tutor/{tutor_id}/add_tutor",
+@router.post("/{student_id}/tutor/{tutor_id}/add_tutor",
              response_model=TutorRes, tags=[Tags.post],
              response_model_exclude=["password"])
-async def add_tutor(req: TutorReq, student_id: str, tutor_id: str,
+async def add_tutor(student_id: str, tutor_id: str,
                     db: Session = Depends(get_db),
                     token: str = Depends(oauth2_scheme)):
     """ Operation to add a new tutor to a students list of tutors"""
@@ -72,15 +72,15 @@ async def add_tutor(req: TutorReq, student_id: str, tutor_id: str,
     if not tutor:
         raise HTTPException(detail="tutor not found", status_code=404)
 
-    student.tutors.append(tutor)
-    tutor.students.append(student)
-    db.save()
+    if tutor not in student.tutors:
+        student.tutors.append(tutor)
+        db.save()
 
-    return tutors
+    return tutor
 
 
-@router.delete("{student_id}/tutor/{tutor_id}", tags=[Tags.delete])
-async def remove_tutor(tutor_id: str, student_id: str,
+@router.delete("/{student_id}/tutor/{tutor_id}", tags=[Tags.delete])
+async def remove_tutor(student_id: str, tutor_id: str,
                        db: Session = Depends(get_db),
                        token: str = Depends(oauth2_scheme)):
     """ Operation to delete a tutor from a students list of tutors """
@@ -94,5 +94,5 @@ async def remove_tutor(tutor_id: str, student_id: str,
         raise HTTPException(detail="tutor not found", status_code=404)
 
     student.tutors.remove(tutor)
-    tutor.students.remove(student)
+    db.save()
     return {}

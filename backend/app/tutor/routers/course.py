@@ -25,10 +25,15 @@ router = APIRouter()
 
 @router.get("/{tutor_id}/course/{course_id}",
             response_model=CourseRes, tags=[Tags.get])
-async def get_course(course_id: str, db: Session = Depends(get_db),
+async def get_course(tutor_id: str, course_id: str,
+                     db: Session = Depends(get_db),
                      token: str = Depends(oauth2_scheme)):
     """ Operation to get a course with a given id """
     verify_token(tutor_id, token)
+    tutor = db.get(Tutor, tutor_id)
+    if not tutor:
+        raise HTTPException(detail="tutor not found", status_code=404)
+
     course = db.get(Course, course_id)
     if not course:
         raise HTTPException(detail="course not found", status_code=404)
@@ -124,7 +129,7 @@ async def update_course(req: CourseReq, tutor_id: str, course_id: str,
     return course
 
 
-@router.delete("{tutor_id}/{course_id}/delete_course", tags=[Tags.delete])
+@router.delete("/{tutor_id}/{course_id}/delete_course", tags=[Tags.delete])
 async def delete_course(tutor_id: str, course_id: str,
                         db: Session = Depends(get_db),
                         token: str = Depends(oauth2_scheme)):

@@ -41,10 +41,10 @@ async def get_tutor_students(tutor_id: str, db: Session = Depends(get_db),
     return tutor.students
 
 
-@router.get("/{tutor_id}/student/{student_id}", response_model=TutorRes,
+@router.get("/{tutor_id}/student/{student_id}", response_model=StudentRes,
             tags=[Tags.get],
             response_model_exclude=["password"])
-async def get_student(student_id: str, tutor_id: str,
+async def get_student(tutor_id: str, student_id: str,
                       db: Session = Depends(get_db),
                       token: str = Depends(oauth2_scheme)):
     """ Operation to get a student with given id """
@@ -60,7 +60,7 @@ async def get_student(student_id: str, tutor_id: str,
     return student
 
 
-@router.delete("{tutor_id}/student/{student_id}", tags=[Tags.delete])
+@router.delete("/{tutor_id}/student/{student_id}", tags=[Tags.delete])
 async def remove_student(tutor_id: str, student_id: str,
                          db: Session = Depends(get_db),
                          token: str = Depends(oauth2_scheme)):
@@ -74,6 +74,6 @@ async def remove_student(tutor_id: str, student_id: str,
     if not student:
         raise HTTPException(detail="Student not found", status_code=404)
 
-    student.tutors.remove(tutor)
     tutor.students.remove(student)
+    db.save()
     return {}

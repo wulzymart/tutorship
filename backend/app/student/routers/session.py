@@ -22,31 +22,9 @@ from typing import List
 router = APIRouter()
 
 
-@router.get("/{student_id}/session/{session_id}", tags=[Tags.get],
-            response_model=SessionRes)
-async def add_student_session(student_id: str, session_id: str,
-                              db: Session = Depends(get_db),
-                              token: str = Depends(oauth2_scheme)):
-    """ Operation to add a session to a students session collection """
-    verify_token(student_id, token)
-    student = db.get(Student, student_id)
-    if not student:
-        raise HTTPException(detail="student not found",
-                            status_code=404)
-
-    session = db.get(SS, session_id)
-    if not session:
-        raise HTTPException(detail="session not found", status_code=404)
-    student.sessions.append(session)
-    session.students.append(student)
-    db.save()
-
-    return session
-
-
-@router.get("/{student_id}/sessions", tags=[Tags.get],
+@router.get("/{student_id}/session", tags=[Tags.get],
             response_model=List[SessionRes])
-async def get_student_sessions(student_id: str,
+async def get_sessions(student_id: str,
                                db: Session = Depends(get_db),
                                token: str = Depends(oauth2_scheme)):
     """ Operation to get all the sessin a student is enrolled in """
@@ -57,6 +35,25 @@ async def get_student_sessions(student_id: str,
                             status_code=404)
 
     return student.sessions
+
+
+@router.get("/{student_id}/session/{session_id}", tags=[Tags.get],
+            response_model=SessionRes)
+async def get_session(student_id: str, session_id: str,
+                              db: Session = Depends(get_db),
+                              token: str = Depends(oauth2_scheme)):
+    """ Operation to get a session from the database collection """
+    verify_token(student_id, token)
+    student = db.get(Student, student_id)
+    if not student:
+        raise HTTPException(detail="student not found",
+                            status_code=404)
+
+    session = db.get(Session, session_id)
+    if not session:
+        raise HTTPException(detail="session not found", status_code=404)
+
+    return session
 
 
 @router.post("/{student_id}/session/{session_id}", tags=[Tags.post],
@@ -71,18 +68,19 @@ async def add_student_session(student_id: str, session_id: str,
         raise HTTPException(detail="student not found",
                             status_code=404)
 
-    session = db.get(SS, session_id)
+    session = db.get(Session, session_id)
     if not session:
         raise HTTPException(detail="session not found", status_code=404)
-    student.sessions.append(session)
-    session.students.append(student)
-    db.save()
+
+    if session not in student.sessions:
+        student.sessions.append(session)
+        db.save()
 
     return session
 
 
 @router.delete("/{student_id}/session/{session_id}", tags=[Tags.delete])
-async def delete_session(tutor_id: str, session_id: str,
+async def delete_session(student_id: str, session_id: str,
                          db: SS = Depends(get_db),
                          token: str = Depends(oauth2_scheme)):
     """
@@ -99,7 +97,6 @@ async def delete_session(tutor_id: str, session_id: str,
         raise HTTPException(detail="session not found", status_code=404)
 
     student.sessions.remove(session)
-    session.students.remove(student)
     db.save()
 
     return {}
