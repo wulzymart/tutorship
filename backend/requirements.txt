@@ -3,7 +3,7 @@ annotated-types==0.6.0
 anyio==3.7.1
 asttokens==2.4.1
 backcall==0.2.0
-backports.zoneinfo==0.2.1
+backports.zoneinfo==0.2.1;python_version<"3.9"
 bcrypt==4.1.1
 cffi==1.16.0
 click==8.1.7
