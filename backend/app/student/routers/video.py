@@ -86,7 +86,7 @@ async def get_video_file(response: Response, student_id: str,
     if not video:
         raise HTTPException(detail="Video not found", status_code=404)
 
-    header_model = VideoRes(**(video.to_dict()))
-    response.headers["X-metadata"]  = header_model.model_dump_json()
+    header_model = VideoRes(**dict(video))
+    response.headers["X-metadata"] = header_model.model_dump_json()
 
     return f"/tmp/uploads/{video.id}"

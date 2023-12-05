@@ -25,8 +25,8 @@ router = APIRouter()
 @router.get("/{student_id}/session", tags=[Tags.get],
             response_model=List[SessionRes])
 async def get_sessions(student_id: str,
-                               db: Session = Depends(get_db),
-                               token: str = Depends(oauth2_scheme)):
+                       db: Session = Depends(get_db),
+                       token: str = Depends(oauth2_scheme)):
     """ Operation to get all the sessin a student is enrolled in """
     verify_token(student_id, token)
     student = db.get(Student, student_id)
@@ -40,8 +40,8 @@ async def get_sessions(student_id: str,
 @router.get("/{student_id}/session/{session_id}", tags=[Tags.get],
             response_model=SessionRes)
 async def get_session(student_id: str, session_id: str,
-                              db: Session = Depends(get_db),
-                              token: str = Depends(oauth2_scheme)):
+                      db: Session = Depends(get_db),
+                      token: str = Depends(oauth2_scheme)):
     """ Operation to get a session from the database collection """
     verify_token(student_id, token)
     student = db.get(Student, student_id)

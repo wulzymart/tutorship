@@ -138,7 +138,7 @@ async def update_video_comment(req: CommentReq, student_id: str,
 @router.delete("/{student_id}/course/{course_id}/video/{video_id}/comment/"
                "{comment_id}",
                tags=[Tags.delete])
-async def delete_comment(student_id: str,course_id: str,
+async def delete_comment(student_id: str, course_id: str,
                          video_id: str, comment_id: str,
                          db: Session = Depends(get_db),
                          token: str = Depends(oauth2_scheme)):

@@ -10,6 +10,7 @@ from fastapi import Depends
 from fastapi import File
 from fastapi import Form
 from fastapi import HTTPException
+from fastapi import Response
 from fastapi import UploadFile
 from fastapi.responses import FileResponse
 from misc.gen_tok import verify_token
@@ -27,7 +28,7 @@ from typing import List
 router = APIRouter()
 
 
-@router.get("/{tutor_id}/course/{course_id}/video/{video_id}",
+@router.get("/{tutor_id}/course/{course_id}/video-data/{video_id}",
             response_model=VideoRes, tags=[Tags.get])
 async def get_video(tutor_id: str, course_id: str, video_id: str,
                     db: Session = Depends(get_db),
@@ -73,7 +74,8 @@ async def get_video_comments(course_id: str, tutor_id: str,
 
 @router.get("/{tutor_id}/course/{course_id}/video_file/{video_id}",
             tags=[Tags.get], response_class=FileResponse)
-async def get_video_file(tutor_id: str, course_id: str, video_id: str,
+async def get_video_file(response: Response, tutor_id: str,
+                         course_id: str, video_id: str,
                          db: Session = Depends(get_db),
                          token: str = Depends(oauth2_scheme)):
     """ Operation to get the video file linked to a video id """
@@ -89,6 +91,9 @@ async def get_video_file(tutor_id: str, course_id: str, video_id: str,
     video = db.get(Video, video_id)
     if not video:
         raise HTTPException(detail="Video not found", status_code=404)
+
+    header_model = VideoRes(**(video.to_dict()))
+    response.headers["X-metadata"] = header_model.model_dump_json()
 
     return f"/tmp/uploads/{video.id}"
 

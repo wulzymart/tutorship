@@ -26,5 +26,5 @@ class VideoRes(Base, VideoReq):
     """
     course_id: str
     tutor_id: str
-    #video_url: HttpUrl
+    # video_url: HttpUrl
     video_url: str
