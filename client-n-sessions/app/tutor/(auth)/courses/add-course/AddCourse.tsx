@@ -1,26 +1,23 @@
-"use client"
+"use client";
 import Button from "@/app/components/utils/Button";
 import TextArea from "@/app/components/utils/TextArea";
 import TextInput from "@/app/components/utils/TextInput";
 import { useState } from "react";
 import TagInput from "./TagInput";
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
-
-const AddCourseUtil =  () => {
+const AddCourseUtil = () => {
   const [courseName, setCourseName] = useState("");
   const [about, setAbout] = useState("");
   const [free, setFree] = useState(false);
   const [price, setPrice] = useState(0);
   const [categories, setCategorie] = useState([]);
-  const router = useRouter()
+  const router = useRouter();
 
   const handleAddCourse = async () => {
-    
-    
     const res = await fetch(
-      "https://bookish-potato-j9vqw47rxg5h5pw6-8000.app.github.dev/course/40f2ba49-6684-4a01-8cef-f5c6f91f2563",
+      `${process.env.NEXT_PUBLIC_SERVERADDRESS}/course/40f2ba49-6684-4a01-8cef-f5c6f91f2563`,
       {
         method: "POST",
         mode: "cors",
@@ -38,10 +35,12 @@ const AddCourseUtil =  () => {
   };
   return (
     <div className="mb-10">
-      <form onSubmit={async (e) => {
-        e.preventDefault()
-        await handleAddCourse()
-      }}>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          await handleAddCourse();
+        }}
+      >
         <div className="flex gap-10 items-center mb-10">
           <label className="font-medium" htmlFor="title">
             Title

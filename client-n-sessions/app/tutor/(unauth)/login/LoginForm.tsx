@@ -1,16 +1,13 @@
-"use-client"
+"use client";
+import { useRouter } from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
-interface LoginFormProps {
-  onLogin: (credentials: { email: string; password: string }) => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+const LoginForm = () => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
-
+  const router = useRouter();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCredentials((prevCredentials) => ({
@@ -18,11 +15,39 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       [name]: value,
     }));
   };
+  const handleLogin = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    // Handle the login logic, e.g., send credentials to the server
+    if (!email || !password) return alert("enter valid email and password");
+    const loginData = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVERADDRESS}/tutor/token`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify({ email, password }),
+      }
+    ).then((res) => res.json());
 
+    console.log(loginData);
+
+    if (loginData.access_token) {
+      localStorage.setItem("access_token", loginData.access_token);
+      return router.push("/tutor/dashboard");
+    }
+    alert("invalid login credentials");
+  };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle login logic, e.g., send credentials to the server
-    onLogin(credentials);
+    handleLogin(credentials);
   };
 
   return (

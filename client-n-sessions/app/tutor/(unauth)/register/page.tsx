@@ -1,7 +1,7 @@
 import RegistrationForm from "./register"
 
 const Page = ()=>{
-    return <RegistrationForm/>
+    return (<section className = "w-full"><RegistrationForm/></section>)
 }
 
 export default Page

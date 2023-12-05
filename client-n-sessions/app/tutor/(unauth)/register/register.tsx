@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, ChangeEvent, FormEvent } from "react";
+
+import React, { useState } from "react";
 
 interface FormData {
   email: string;
@@ -10,6 +11,12 @@ interface FormData {
   state: string;
   country: string;
   dob: string;
+  bio: string;
+  experience: string;
+  certifications: string;
+  links: string;
+  contact: string;
+  subjects: string;
 }
 
 const RegistrationForm: React.FC = () => {
@@ -22,35 +29,51 @@ const RegistrationForm: React.FC = () => {
     state: "",
     country: "",
     dob: "",
+    bio: "",
+    experience: "",
+    certifications: "",
+    links: "",
+    contact: "",
+    subjects: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.currentTarget;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (confirmPassword !== formData.password)
       return alert("imputed passswords not correct");
+
     // Handle form submission logic, e.g., send data to the server
-    const regData = fetch(
-      "https://glorious-space-invention-rwqpvr6r7qwcp5p7-8000.app.github.dev/tutor",
-      { method: "POST", body: JSON.stringify(formData) }
+    const regData = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVERADDRESS}/tutor/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(formData),
+      }
     ).then((res) => res.json());
+    console.log(regData);
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full mx-auto mt-8 p-4 border rounded"
-    >
+    <form onSubmit={handleSubmit} className="w-full  mt-8 p-4 border rounded">
       <div className="w-full flex gap-6">
-        <label className="block mb-2">
+        <label className="basis-1/2 block mb-2">
           First Name:
           <input
             type="text"
@@ -61,7 +84,7 @@ const RegistrationForm: React.FC = () => {
             required
           />
         </label>
-        <label className="block mb-2">
+        <label className="basis-1/2 block mb-2">
           Last Name:
           <input
             type="text"
@@ -74,7 +97,7 @@ const RegistrationForm: React.FC = () => {
         </label>
       </div>
       <div className="w-full flex gap-6">
-        <label className="block mb-2">
+        <label className="basis-1/2 block mb-2">
           Email:
           <input
             type="email"
@@ -86,7 +109,7 @@ const RegistrationForm: React.FC = () => {
           />
         </label>
 
-        <label className="block mb-2">
+        <label className="basis-1/2 block mb-2">
           Date of Birth:
           <input
             type="date"
@@ -99,7 +122,7 @@ const RegistrationForm: React.FC = () => {
         </label>
       </div>
       <div className="w-full flex gap-6">
-        <label className="block mb-2">
+        <label className="w-full block mb-2">
           Address:
           <input
             type="text"
@@ -112,7 +135,7 @@ const RegistrationForm: React.FC = () => {
         </label>
       </div>
       <div className="w-full flex gap-6">
-        <label className="block mb-2">
+        <label className="basis-1/2 block mb-2">
           State:
           <input
             type="text"
@@ -123,7 +146,7 @@ const RegistrationForm: React.FC = () => {
             required
           />
         </label>
-        <label className="block mb-2">
+        <label className="basis-1/2 block mb-2">
           Country:
           <input
             type="text"
@@ -135,8 +158,72 @@ const RegistrationForm: React.FC = () => {
           />
         </label>
       </div>
+
+      <label className="block mb-2">
+        Bio:
+        <textarea
+          name="bio"
+          value={formData.bio}
+          onChange={handleChange}
+          className="w-full mt-1 p-2 border rounded"
+        />
+      </label>
       <div className="w-full flex gap-6">
-        <label className="block mb-2">
+        <label className="basis-1/2 block mb-2">
+          Experience:
+          <input
+            type="text"
+            name="experience"
+            value={formData.experience}
+            onChange={handleChange}
+            className="w-full mt-1 p-2 border rounded"
+          />
+        </label>
+        <label className="basis-1/2 block mb-2">
+          Certifications:
+          <input
+            type="text"
+            name="certifications"
+            value={formData.certifications}
+            onChange={handleChange}
+            className="w-full mt-1 p-2 border rounded"
+          />
+        </label>
+      </div>
+      <div className="w-full flex gap-6">
+        <label className="basis-1/2 block mb-2">
+          Links:
+          <input
+            type="url"
+            name="links"
+            value={formData.links}
+            onChange={handleChange}
+            className="w-full mt-1 p-2 border rounded"
+          />
+        </label>
+        <label className="basis-1/2 block mb-2">
+          Contact:
+          <input
+            type="text"
+            name="contact"
+            value={formData.contact}
+            onChange={handleChange}
+            className="w-full mt-1 p-2 border rounded"
+          />
+        </label>
+      </div>
+      <label className="block mb-2">
+        Subjects:
+        <input
+          type="text"
+          name="subjects"
+          value={formData.subjects}
+          onChange={handleChange}
+          className="w-full mt-1 p-2 border rounded"
+        />
+      </label>
+      <div className="w-full flex gap-6">
+        <label className="basis-1/2 block mb-2">
           Password:
           <input
             type="password"
@@ -147,7 +234,7 @@ const RegistrationForm: React.FC = () => {
             required
           />
         </label>
-        <label className="block mb-2">
+        <label className="basis-1/2 block mb-2">
           Confirm Password:
           <input
             type="password"
@@ -163,7 +250,6 @@ const RegistrationForm: React.FC = () => {
           />
         </label>
       </div>
-
       <button
         type="submit"
         className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
