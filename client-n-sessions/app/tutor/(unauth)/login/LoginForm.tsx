@@ -4,7 +4,7 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const router = useRouter();
@@ -16,23 +16,29 @@ const LoginForm = () => {
     }));
   };
   const handleLogin = async ({
-    email,
+    username,
     password,
   }: {
-    email: string;
+    username: string;
     password: string;
   }) => {
     // Handle the login logic, e.g., send credentials to the server
-    if (!email || !password) return alert("enter valid email and password");
+    if (!username || !password) return alert("enter valid email and password");
+    const formdata = new URLSearchParams();
+    formdata.append("username", username);
+    formdata.append("password", password);
+    console.log(formdata);
+
     const loginData = await fetch(
       `${process.env.NEXT_PUBLIC_SERVERADDRESS}/tutor/token`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
+          //"Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({ email, password }),
+
+        body: formdata,
       }
     ).then((res) => res.json());
 
@@ -52,6 +58,7 @@ const LoginForm = () => {
 
   return (
     <form
+      id="login"
       onSubmit={handleSubmit}
       className="max-w-md mx-auto mt-8 p-4 border rounded"
     >
@@ -59,8 +66,8 @@ const LoginForm = () => {
         Email:
         <input
           type="email"
-          name="email"
-          value={credentials.email}
+          name="username"
+          value={credentials.username}
           onChange={handleChange}
           className="w-full mt-1 p-2 border rounded"
           required

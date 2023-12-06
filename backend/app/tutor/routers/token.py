@@ -26,6 +26,7 @@ async def get_user_token(db: Session = Depends(get_db),
     """
     Operation to generate access token for a user on sign in
     """
+    print(login_info, db)
     user = authenticate(db, Tutor, login_info.username, login_info.password)
     if not user:
         raise HTTPException(detail="Incorrect Username or Password",

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   email: string;
@@ -20,6 +21,7 @@ interface FormData {
 }
 
 const RegistrationForm: React.FC = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     firstname: "",
@@ -68,6 +70,7 @@ const RegistrationForm: React.FC = () => {
       }
     ).then((res) => res.json());
     console.log(regData);
+    router.push("/tutor/login");
   };
 
   return (
