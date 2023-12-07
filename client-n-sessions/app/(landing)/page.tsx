@@ -48,7 +48,7 @@ const HomePage = () => {
         <div className='flex gap-10 w-[80%] mx-auto mt-20'> 
         <div className="mb-8 basis-1/3">
           <div className="relative w-full h-48 lg:h-60 xl:h-72 mb-6">
-            <Image src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Feature 1" layout="fill" objectFit="cover" className="rounded-md" />
+            <Image src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" fill={true}  alt="Feature 1"  className="rounded-md" />
           </div>
           <h3 className="text-lg lg:text-xl xl:text-2xl font-semibold mb-4">On Demand Courses</h3>
           <p className="text-gray-300">We have tons of courses from experienced tutors to help you start or progress in your career</p>
@@ -56,7 +56,7 @@ const HomePage = () => {
         {/* Feature 2 */}
         <div className="mb-8 basis-1/3">
           <div className="relative w-full h-48 lg:h-60 xl:h-72 mb-6">
-            <Image src="https://images.unsplash.com/photo-1616596871445-bb8290a7a2c2?q=80&w=2007&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Feature 2" layout="fill" objectFit="cover" className="rounded-md" />
+            <Image src="https://images.unsplash.com/photo-1616596871445-bb8290a7a2c2?q=80&w=2007&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" fill={true}  alt="Feature 2"  className="rounded-md" />
           </div>
           <h3 className="text-lg lg:text-xl xl:text-2xl font-semibold mb-4">Mentor & Mentee </h3>
           <p className="text-gray-300">Tutorship gives you a platform to subscribed to mentoring from our different tutors giving you opportunities to connect on live learning sessions</p>
@@ -64,7 +64,7 @@ const HomePage = () => {
         {/* Feature 3 */}
         <div className="mb-8 basis-1/3">
           <div className="relative w-full h-48 lg:h-60 xl:h-72 mb-6">
-            <Image src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Feature 3" layout="fill" objectFit="cover" className="rounded-md" />
+            <Image src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" fill={true}  alt="Feature 3"  className="rounded-md" />
           </div>
           <h3 className="text-lg lg:text-xl xl:text-2xl font-semibold mb-4">Assessments</h3>
           <p className="text-gray-300">Track your progress, by taking course and subject assessments, and challenge yourself to grow in your own path</p>
