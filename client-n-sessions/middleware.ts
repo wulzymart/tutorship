@@ -39,10 +39,22 @@ function setToken(
   }
 }
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const header = new Headers(request.headers);
+  const { pathname, search } = request.nextUrl;
   const cookies = request.cookies;
-  console.log(cookies);
+  if (pathname === "/logout") {
+    const userType = search.split("=")[1];
+
+    if (
+      userType === "tutor" ||
+      userType === "learner" ||
+      userType === "admin"
+    ) {
+      const response = NextResponse.redirect(new URL("/", request.url));
+      response.cookies.delete(`${userType}_access_token`);
+      return response;
+    }
+  }
+  const header = new Headers(request.headers);
 
   const tutorToken = cookies.get("tutor_access_token")?.value;
   const learnerToken = cookies.get("learner_access_token")?.value;

@@ -1,13 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import { MdDashboard, MdAssessment } from "react-icons/md";
-import { IoVideocam } from "react-icons/io5";
-import { MdVideoCameraFront } from "react-icons/md";
-import { FaWallet } from "react-icons/fa";
 import { SidebarEntry, UserType } from "@/app/interfaces/Interfaces";
-import { IoMdSettings } from "react-icons/io";
 import Entry from "./Entry";
-import SignOut from "./SignOut";
+import Link from "next/link";
 
 const Sidebar = ({
   sidebarEntries,
@@ -17,7 +12,7 @@ const Sidebar = ({
   userType: UserType;
 }) => {
   return (
-    <div className="relative bottom-4 w-[20%]  overflow-y-scroll scrollbar bg-main flex flex-col h-screen  overflow-x-hidden">
+    <div className="relative w-[20%]  overflow-y-scroll scrollbar bg-main flex flex-col h-screen  overflow-x-hidden">
       {/* <div className="text-right px-5">
         <button className="text-white">
           <FaBars />
@@ -38,7 +33,20 @@ const Sidebar = ({
           <Entry {...entry} />
         </div>
       ))}
-      <SignOut userType={userType} />
+      <div className="absolute w-full bottom-4  pl-10 flex gap-4">
+        <Link
+          className="text-white hover:text-front text-sm"
+          href={{
+            pathname: "/logout",
+            query: `usertype=${userType}`,
+          }}
+        >
+          sign out
+        </Link>
+        <Link href="/" className="text-white hover:text-front text-sm">
+          Home
+        </Link>
+      </div>
     </div>
   );
 };
