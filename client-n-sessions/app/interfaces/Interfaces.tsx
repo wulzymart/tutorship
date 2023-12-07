@@ -76,3 +76,5 @@ export interface ReviewCardInterface {
   learner: string;
   id: string;
 }
+
+export type UserType = "tutor" | "admin" | "learner";

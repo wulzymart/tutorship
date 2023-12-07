@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { learnersSidebarEntries, tutorsSidebarEntries } from "../../data";
+import { tutorsSidebarEntries } from "../../data";
+import { redirect } from "next/navigation";
+import { cookies, headers } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,9 +17,14 @@ export default function TutorLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const id = headers().get("tutor_id");
+
+  if (!id) {
+    redirect("/tutor/login");
+  }
   return (
     <section className="flex h-screen w-screen">
-      <Sidebar sidebarEntries={tutorsSidebarEntries} />
+      <Sidebar userType="tutor" sidebarEntries={tutorsSidebarEntries} />
       <div className="container p-10 w-[80%] h-screen overflow-y-auto">
         {children}
       </div>

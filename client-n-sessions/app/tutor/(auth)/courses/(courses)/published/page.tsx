@@ -1,15 +1,24 @@
 import CourseInfoCard from "@/app/components/entities/courses/CourseInfoCard";
+import { logout } from "@/app/functions";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 const CoursesPage = async () => {
   const headersList = headers();
-  const tutorId = headersList.get("userId");
-  const tutorCourses = await fetch(
-    `http://127.0.0.1:8000/tutor/${tutorId}/courses`,
-    {
-      cache: "no-cache",
-    }
-  ).then((res) => res.json());
+  const tutorId = headersList.get("tutor_id");
+  const access_token = headersList.get("tutor_token");
+  const res = await fetch(`http://127.0.0.1:8000/tutor/${tutorId}/courses`, {
+    cache: "no-cache",
+    headers: {
+      authorization: `bearer ${access_token}`,
+    },
+  });
+  if (res.status < 500 && res.status >= 400) {
+    logout("tutor");
+    redirect("/tutor/login");
+  }
+  const tutorCourses = await res.json();
+
   const courses = [
     {
       id: "1",

@@ -69,12 +69,14 @@ const RegistrationForm: React.FC = () => {
         body: JSON.stringify(formData),
       }
     ).then((res) => res.json());
-    console.log(regData);
     router.push("/tutor/login");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full  mt-8 p-4 border rounded">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full  mt-8 p-4 border rounded flex flex-col gap-4"
+    >
       <div className="w-full flex gap-6">
         <label className="basis-1/2 block mb-2">
           First Name:
@@ -255,7 +257,7 @@ const RegistrationForm: React.FC = () => {
       </div>
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
+        className="w-full bg-main2 text-white p-2 rounded hover:bg-blue-900 mt-6"
       >
         Register
       </button>

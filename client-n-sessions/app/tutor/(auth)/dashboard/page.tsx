@@ -4,24 +4,36 @@ import Header3 from "@/app/components/utils/Header3";
 import RoundImage from "@/app/components/utils/RoundImage";
 import React from "react";
 import CourseCarousel from "./CourseCarousel";
-import { headers } from "next/headers";
+import { jwtDecode } from "jwt-decode";
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
+
 function log<T>(item: T) {
   console.log(item);
 }
-const TutorsDashboard = async (props: any) => {
-  log(props);
-  const headersList = headers();
-  const id = headersList.get("userId");
+const TutorsDashboard = async () => {
+  const id = headers().get("tutor_id");
+  const access_token = headers().get("tutor_token");
+  console.log(id);
+
   const tutorResponse = await fetch(`http://127.0.0.1:8000/tutor/${id}`, {
     cache: "no-cache",
+    headers: {
+      authorization: `bearer ${access_token}`,
+    },
   });
   const tutorFromServer = await tutorResponse.json();
   const tutorCourses = await fetch(
     `http://127.0.0.1:8000/tutor/${id}/courses`,
     {
       cache: "no-cache",
+      headers: {
+        authorization: `bearer ${access_token}`,
+      },
     }
   ).then((res) => res.json());
+  console.log(tutorCourses);
+
   tutorCourses.forEach(function <T extends (typeof tutor.courses)[0]>(
     element: T
   ) {

@@ -4,13 +4,20 @@ import { MdDashboard, MdAssessment } from "react-icons/md";
 import { IoVideocam } from "react-icons/io5";
 import { MdVideoCameraFront } from "react-icons/md";
 import { FaWallet } from "react-icons/fa";
-import { SidebarEntry } from "@/app/interfaces/Interfaces";
+import { SidebarEntry, UserType } from "@/app/interfaces/Interfaces";
 import { IoMdSettings } from "react-icons/io";
 import Entry from "./Entry";
+import SignOut from "./SignOut";
 
-const Sidebar = ({ sidebarEntries }: { sidebarEntries: SidebarEntry[] }) => {
+const Sidebar = ({
+  sidebarEntries,
+  userType,
+}: {
+  sidebarEntries: SidebarEntry[];
+  userType: UserType;
+}) => {
   return (
-    <div className="w-[20%]  overflow-y-scroll scrollbar bg-main flex flex-col h-screen  overflow-x-hidden">
+    <div className="relative bottom-4 w-[20%]  overflow-y-scroll scrollbar bg-main flex flex-col h-screen  overflow-x-hidden">
       {/* <div className="text-right px-5">
         <button className="text-white">
           <FaBars />
@@ -31,6 +38,7 @@ const Sidebar = ({ sidebarEntries }: { sidebarEntries: SidebarEntry[] }) => {
           <Entry {...entry} />
         </div>
       ))}
+      <SignOut userType={userType} />
     </div>
   );
 };
