@@ -4,15 +4,17 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 const CoursesPage = async () => {
-  const headersList = headers();
-  const tutorId = headersList.get("tutor_id");
-  const access_token = headersList.get("tutor_token");
-  const res = await fetch(`http://127.0.0.1:8000/tutor/${tutorId}/courses`, {
-    cache: "no-cache",
-    headers: {
-      authorization: `bearer ${access_token}`,
-    },
-  });
+  const tutorId = headers().get("tutor_id");
+  const access_token = headers().get("tutor_token");
+  const res = await fetch(
+    `${process.env.SERVERADDRESS}/tutor/${tutorId}/courses`,
+    {
+      cache: "no-cache",
+      headers: {
+        authorization: `bearer ${access_token}`,
+      },
+    }
+  );
   if (res.status < 500 && res.status >= 400) {
     logout("tutor");
     redirect("/tutor/login");
@@ -73,7 +75,11 @@ const CoursesPage = async () => {
     <div>
       <div className="flex flex-wrap justify-center">
         {tutorCourses.map((course: any) => (
-          <CourseInfoCard key={course.id} {...course} />
+          <CourseInfoCard
+            key={course.id}
+            {...course}
+            link={`/tutor/courses/${course.id}`}
+          />
         ))}
       </div>
     </div>

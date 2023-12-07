@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
-import AddCourseButton from "./AddCourseButton";
+import AddCourseButton from "../../../../components/utils/AddCourseButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function TutorCourseLayout({
         <Link href="/tutor/courses/published">Published</Link>
         <Link href="/tutor/courses/unpublished">Unpublished</Link>
       </div>
-      <div>{children}</div>
+      <div className="min-h-[300px]">{children}</div>
       <AddCourseButton />
     </div>
   );

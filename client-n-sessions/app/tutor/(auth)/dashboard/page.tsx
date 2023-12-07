@@ -7,6 +7,7 @@ import CourseCarousel from "./CourseCarousel";
 import { jwtDecode } from "jwt-decode";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import AddCourseButton from "@/app/components/utils/AddCourseButton";
 
 function log<T>(item: T) {
   console.log(item);
@@ -16,15 +17,18 @@ const TutorsDashboard = async () => {
   const access_token = headers().get("tutor_token");
   console.log(id);
 
-  const tutorResponse = await fetch(`http://127.0.0.1:8000/tutor/${id}`, {
-    cache: "no-cache",
-    headers: {
-      authorization: `bearer ${access_token}`,
-    },
-  });
+  const tutorResponse = await fetch(
+    `${process.env.SERVERADDRESS}/tutor/${id}`,
+    {
+      cache: "no-cache",
+      headers: {
+        authorization: `bearer ${access_token}`,
+      },
+    }
+  );
   const tutorFromServer = await tutorResponse.json();
   const tutorCourses = await fetch(
-    `http://127.0.0.1:8000/tutor/${id}/courses`,
+    `${process.env.SERVERADDRESS}/tutor/${id}/courses`,
     {
       cache: "no-cache",
       headers: {
@@ -119,7 +123,10 @@ const TutorsDashboard = async () => {
         />
       </section>
       <section className=" bg-slate-50 p-10 rounded-lg mb-16">
-        <Header3 text="My courses" />
+        <div className="flex justify-between">
+          <Header3 text="My courses" />
+          <AddCourseButton />
+        </div>
         <CourseCarousel courses={tutorCourses} />
         {/* <div className="flex flex-wrap">
           {tutor.courses.map((course) => (

@@ -11,10 +11,17 @@ const CourseInfoCard = ({
   thumbnail_url,
   rating,
   sales,
+  link,
 }: CourseInfoCardInterface) => {
   return (
     <div className="p-5 text-main2">
-      <Thumbnail alt={title} src={thumbnail_url} height={356} width={200} />
+      <Thumbnail
+        alt={title}
+        src={thumbnail_url}
+        height={356}
+        width={200}
+        link={link}
+      />
       <Header5 text={title} />
       <p className="font-medium text-[16px]">{tutor_name}</p>
       <div className="text-sm flex justify-between">

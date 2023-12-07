@@ -44,6 +44,7 @@ export interface ImageThumbNailInterface {
   src: string;
   width: number;
   height: number;
+  link?: string;
 }
 
 export interface CourseInfoCardInterface {
@@ -54,6 +55,7 @@ export interface CourseInfoCardInterface {
   thumbnail_url: string;
   rating: number;
   sales?: number;
+  link?: string;
 }
 
 export interface AssessmentCardInterface {

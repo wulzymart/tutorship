@@ -26,7 +26,11 @@ const CourseCarousel = ({
     <div>
       <Slider {...settings}>
         {courses.map((course) => (
-          <CourseInfoCard key={course.id} {...course} />
+          <CourseInfoCard
+            key={course.id}
+            {...course}
+            link={`/tutor/courses/${course.id}`}
+          />
         ))}
       </Slider>
     </div>

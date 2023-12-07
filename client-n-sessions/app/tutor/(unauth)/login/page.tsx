@@ -17,7 +17,7 @@ const LoginPage = async () => {
     formdata.append("username", username as string);
     formdata.append("password", password as string);
 
-    const loginData = await fetch(`http://127.0.0.1:8000/tutor/token`, {
+    const loginData = await fetch(`${process.env.SERVERADDRESS}/tutor/token`, {
       cache: "no-cache",
       method: "POST",
       headers: {
