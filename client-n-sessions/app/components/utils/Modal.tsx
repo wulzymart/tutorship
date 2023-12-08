@@ -1,9 +1,17 @@
 import React from "react";
 
-const Modal = ({ id, children }: { id: string; children: React.ReactNode }) => {
+const Modal = ({
+  id,
+  children,
+  className,
+}: {
+  id: string;
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <dialog id={id} className="modal">
-      <div className="modal-box scrollbar">
+    <dialog id={id} className="modal bg-black/60">
+      <div className={`modal-box scrollbar ${className}`}>
         {children}
         <div className="modal-action">
           <form method="dialog">

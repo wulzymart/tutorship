@@ -18,7 +18,7 @@ const TextArea = ({
   return (
     <div className={className}>
       <textarea
-        className="w-full h-full rounded bg-white"
+        className="w-full h-full rounded-lg bg-white"
         rows={rows}
         cols={cols}
         name={name}

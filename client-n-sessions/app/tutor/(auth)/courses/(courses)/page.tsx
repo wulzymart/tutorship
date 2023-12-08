@@ -77,6 +77,7 @@ const CoursesPage = async () => {
         {tutorCourses.map((course: any) => (
           <CourseInfoCard
             key={course.id}
+            thumbnail_url="https://idreamcareer.com/wp-content/uploads/2023/06/BE-Courses.webp"
             {...course}
             link={`/tutor/courses/${course.id}`}
           />

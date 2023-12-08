@@ -11,7 +11,7 @@ const SingleCourse = async ({ params }: { params: { course_id: string } }) => {
   const courseData = await fetch(
     `${process.env.SERVERADDRESS}/tutor/${tutorId}/course/${course_id}`,
     {
-      cache: "no-cache",
+      next: { tags: ["course"] },
       headers: {
         authorization: `bearer ${access_token}`,
         "Content-Type": "application/json",
@@ -19,15 +19,30 @@ const SingleCourse = async ({ params }: { params: { course_id: string } }) => {
       },
     }
   ).then((res) => res.json());
+  console.log(courseData);
+
   return (
     <div>
-      <CourseHeader title={courseData.title} id={courseData.id} />
+      <CourseHeader
+        title={courseData.title}
+        id={courseData.id}
+        course={courseData}
+      />
       <div className="flex gap-10">
         <section className="w-2/3">
           <div>
             <Header3 text="About" />
-            <div>
+            <div className="flex flex-col gap-6">
               <p>{courseData.about}</p>
+              <div>
+                {courseData.free ? (
+                  <p className="px-2 rounded bg-green-400 text-white w-fit">
+                    free
+                  </p>
+                ) : (
+                  <p className="font-medium">Price: {courseData.price}</p>
+                )}
+              </div>
             </div>
           </div>
           <div>
