@@ -15,8 +15,6 @@ function log<T>(item: T) {
 const TutorsDashboard = async () => {
   const id = headers().get("tutor_id");
   const access_token = headers().get("tutor_token");
-  console.log(id);
-
   const tutorResponse = await fetch(
     `${process.env.SERVERADDRESS}/tutor/${id}`,
     {
@@ -36,8 +34,6 @@ const TutorsDashboard = async () => {
       },
     }
   ).then((res) => res.json());
-  console.log(tutorCourses);
-
   tutorCourses.forEach(function <T extends (typeof tutor.courses)[0]>(
     element: T
   ) {

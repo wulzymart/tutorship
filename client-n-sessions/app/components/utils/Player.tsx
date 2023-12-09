@@ -19,7 +19,12 @@ const Player = ({
         Authorization: `Bearer ${token}`,
       },
     };
-    fetch(url, options)
+    fetch(url, {
+      cache: "no-cache",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.blob())
       .then((blob) => {
         setUrl(URL.createObjectURL(blob));
@@ -32,7 +37,6 @@ const Player = ({
       setHasWindow(true);
     }
   }, []);
-  console.log(use_url);
 
   return hasWindow ? (
     <ReactPlayer

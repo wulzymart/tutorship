@@ -51,7 +51,6 @@ const VideoUpload = ({
   const handleUpload = async () => {
     // Perform upload logic here (e.g., using a file upload API)
     if (!title || !description || !selectedFile) return;
-    console.log("Uploading:", title, description, selectedFile);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
@@ -73,7 +72,6 @@ const VideoUpload = ({
     );
     if (res.status < 300) {
       const video = await res.json();
-      console.log(video);
       setFree(false);
       reset();
       (document.getElementById("add-video") as HTMLDialogElement).close();

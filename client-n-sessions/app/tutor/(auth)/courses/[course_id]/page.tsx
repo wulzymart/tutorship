@@ -19,8 +19,6 @@ const SingleCourse = async ({ params }: { params: { course_id: string } }) => {
       },
     }
   ).then((res) => res.json());
-  console.log(courseData);
-
   return (
     <div>
       <CourseHeader

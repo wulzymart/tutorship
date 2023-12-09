@@ -49,7 +49,6 @@ const EditVideo = ({
     formData.append("published", String(published));
     selectedFile && formData.append("video_file", selectedFile);
     const tutorId = jwtDecode(access_token)?.sub;
-    console.log(selectedFile);
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVERADDRESS}/tutor/${tutorId}/course/${courseId}/update-video/${id}`,
@@ -66,7 +65,6 @@ const EditVideo = ({
     );
     if (res.status < 300) {
       const video = await res.json();
-      console.log(video);
       setEditFree(free);
       reset();
       (document.getElementById(`edit_${id}`) as HTMLDialogElement).close();

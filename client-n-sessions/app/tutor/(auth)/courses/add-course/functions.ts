@@ -28,5 +28,5 @@ export async function addCourse(
   if (res.status < 300) {
     const courseInfo = await res.json();
     redirect(`/tutor/courses/${courseInfo.id}`);
-  } else console.log(res.status, await res.json());
+  }
 }
