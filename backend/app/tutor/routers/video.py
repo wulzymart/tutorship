@@ -135,7 +135,7 @@ async def save_video_file(tutor_id: str, course_id: str,
     return video
 
 
-@router.put("/{tutor_id}/course/{course_id}/update-vid/{video_id}",
+@router.put("/{tutor_id}/course/{course_id}/update-video/{video_id}",
             tags=[Tags.put],
             response_model=VideoRes)
 async def update_video(tutor_id: str, course_id: str, video_id: str,

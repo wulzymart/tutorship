@@ -50,7 +50,11 @@ const SingleCourse = async ({ params }: { params: { course_id: string } }) => {
             <ReviewList />
           </div>
         </section>
-        <VideoLogic />
+        <VideoLogic
+          courseId={course_id}
+          tutorId={tutorId as string}
+          access_token={access_token as string}
+        />
       </div>
     </div>
   );

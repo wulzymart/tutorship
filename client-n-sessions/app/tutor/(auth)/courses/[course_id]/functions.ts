@@ -93,3 +93,125 @@ export async function editCourse(course: any) {
     revalidateTag("course");
   } else console.log(res.status, await res.json());
 }
+
+export async function publishVideo(
+  courseId: string,
+  video: {
+    id: string;
+    title: string;
+    description: string;
+    free: boolean;
+    video_url: string;
+    published: boolean;
+  }
+) {
+  video.published = true;
+  const formData = new FormData();
+  Object.entries(video).forEach(([key, value]: [key: string, value: any]) => {
+    if (key !== "video_url") {
+      formData.append(
+        key,
+        key === "free" || key === "published" ? String(value) : value
+      );
+    }
+  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVERADDRESS}/tutor/${tutorId}/course/${courseId}/update-video/${video.id}`,
+    {
+      cache: "no-cache",
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${access_token}`,
+        // "Content-Type": "multipart/form-data",
+        // // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData,
+    }
+  );
+}
+
+export async function unpublishVideo(
+  courseId: string,
+  video: {
+    id: string;
+    title: string;
+    description: string;
+    free: boolean;
+    video_url: string;
+    published: boolean;
+  }
+) {
+  video.published = false;
+  const formData = new FormData();
+  Object.entries(video).forEach(([key, value]: [key: string, value: any]) => {
+    if (key !== "video_url") {
+      formData.append(
+        key,
+        key === "free" || key === "published" ? String(value) : value
+      );
+    }
+  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVERADDRESS}/tutor/${tutorId}/course/${courseId}/update-video/${video.id}`,
+    {
+      cache: "no-cache",
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${access_token}`,
+        // "Content-Type": "multipart/form-data",
+        // // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData,
+    }
+  );
+}
+
+export async function deleteVideo(courseId: string, id: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVERADDRESS}/tutor/${tutorId}/course/${courseId}/delete-video/${id}`,
+    {
+      cache: "no-cache",
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${access_token}`,
+        // "Content-Type": "multipart/form-data",
+        // // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }
+  );
+}
+export async function editVideo(
+  courseId: string,
+  video: {
+    id: string;
+    title: string;
+    description: string;
+    free: boolean;
+    video_url: string;
+    published: boolean;
+  }
+) {
+  video.published = false;
+  const formData = new FormData();
+  Object.entries(video).forEach(([key, value]: [key: string, value: any]) => {
+    if (key !== "video_url") {
+      formData.append(
+        key,
+        key === "free" || key === "published" ? String(value) : value
+      );
+    }
+  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVERADDRESS}/tutor/${tutorId}/course/${courseId}/update-video/${video.id}`,
+    {
+      cache: "no-cache",
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${access_token}`,
+        // "Content-Type": "multipart/form-data",
+        // // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData,
+    }
+  );
+}

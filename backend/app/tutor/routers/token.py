@@ -15,7 +15,7 @@ from routers.method_tags import Tags
 from schemas.token import Token
 from sqlalchemy.orm import Session
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30 
+ACCESS_TOKEN_EXPIRE_MINUTES = 24 * 60
 
 router = APIRouter()
 
