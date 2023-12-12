@@ -43,7 +43,6 @@ def verify_token(user_id: str, token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         token_id: str = payload.get("sub")
-        print(token_id)
         if token_id is None or user_id != token_id:
             raise credentials_exception
     except JWTError:
